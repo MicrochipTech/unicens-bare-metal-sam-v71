@@ -1,0 +1,3 @@
+[submodule "audio-source/samv71-ucs/libraries/unicens/ucs2"]
+	path = audio-source/samv71-ucs/libraries/unicens/ucs2
+	url = https://github.com/MicrochipTech/unicens.git

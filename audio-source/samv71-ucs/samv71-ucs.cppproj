@@ -1,0 +1,1417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>7.0</ProjectVersion>
+    <ToolchainName>com.Atmel.ARMGCC.CPP</ToolchainName>
+    <ProjectGuid>{90f39031-8e20-465b-a247-45a4bffa56d1}</ProjectGuid>
+    <avrdevice>ATSAMV71Q21</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>CPP</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>GccApplication1</AssemblyName>
+    <Name>samv71-ucs</Name>
+    <RootNamespace>GccApplication1</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.31.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.samice</avrtool>
+    <avrtoolserialnumber>28015392</avrtoolserialnumber>
+    <avrdeviceexpectedsignature>0xA1220E00</avrdeviceexpectedsignature>
+    <com_atmel_avrdbg_tool_samice>
+      <ToolOptions>
+        <InterfaceProperties>
+          <SwdClock>4000000</SwdClock>
+        </InterfaceProperties>
+        <InterfaceName>SWD</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
+      <ToolNumber>28015392</ToolNumber>
+      <ToolName>SAM-ICE</ToolName>
+    </com_atmel_avrdbg_tool_samice>
+    <avrtoolinterface>SWD</avrtoolinterface>
+    <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
+    <custom>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>SWD</InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">custom</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Custom Programming Tool</ToolName>
+    </custom>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</armgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <armgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</armgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <armgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>BOARD_SAMV71_XULT</Value>
+  <Value>GMAC_ZEROCOPY</Value>
+  <Value>NDEBUG</Value>
+</ListValues></armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
+  <armgcc.compiler.optimization.EnableFastMath>True</armgcc.compiler.optimization.EnableFastMath>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <armgcccpp.compiler.symbols.DefSymbols><ListValues>
+  <Value>BOARD_SAMV71_XULT</Value>
+  <Value>GMAC_ZEROCOPY</Value>
+  <Value>NDEBUG</Value>
+</ListValues></armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
+  <armgcccpp.compiler.optimization.EnableFastMath>True</armgcccpp.compiler.optimization.EnableFastMath>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.general.UseNewlibNano>True</armgcccpp.linker.general.UseNewlibNano>
+  <armgcccpp.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths><ListValues><Value>../libraries/libboard/resources_v71</Value><Value>../libraries/libboard/resources_v71/gcc</Value><Value>../libraries/libboard/resources_v71/nocache_region/gcc</Value></ListValues></armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.optimization.EnableFastMath>True</armgcccpp.linker.optimization.EnableFastMath>
+  <armgcccpp.linker.memorysettings.ExternalRAM></armgcccpp.linker.memorysettings.ExternalRAM>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsamv71q21_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\SAMV71_DFP\1.1.61\include</Value><Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value></ListValues></armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.general.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\SAMV71_DFP\1.1.61\include</Value><Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value></ListValues></armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize most (-O3)</armgcc.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.level>Optimize most (-O3)</armgcccpp.compiler.optimization.level>
+</ArmGccCpp>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</armgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <armgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</armgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <armgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>BOARD_SAMV71_XULT</Value>
+  <Value>GMAC_ZEROCOPY</Value>
+  <Value>TRACE_LEVEL=TRACE_LEVEL_WARNING</Value>
+  <Value>DEBUG</Value>
+  <Value>ENABLE_TCM</Value>
+</ListValues></armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.PrepareDataForGarbageCollection>False</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
+  <armgcc.compiler.optimization.EnableFastMath>False</armgcc.compiler.optimization.EnableFastMath>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <armgcccpp.compiler.symbols.DefSymbols><ListValues>
+  <Value>BOARD_SAMV71_XULT</Value>
+  <Value>GMAC_ZEROCOPY</Value>
+  <Value>TRACE_LEVEL=TRACE_LEVEL_WARNING</Value>
+  <Value>DEBUG</Value>
+  <Value>ENABLE_TCM</Value>
+</ListValues></armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>False</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
+  <armgcccpp.compiler.optimization.EnableFastMath>False</armgcccpp.compiler.optimization.EnableFastMath>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.general.UseNewlibNano>False</armgcccpp.linker.general.UseNewlibNano>
+  <armgcccpp.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths><ListValues><Value>../libraries/libboard/resources_v71</Value><Value>../libraries/libboard/resources_v71/gcc</Value><Value>../libraries/libboard/resources_v71/nocache_region/gcc</Value></ListValues></armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.optimization.EnableFastMath>False</armgcccpp.linker.optimization.EnableFastMath>
+  <armgcccpp.linker.memorysettings.ExternalRAM></armgcccpp.linker.memorysettings.ExternalRAM>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsamv71q21_flash_tcm.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\SAMV71_DFP\1.1.61\include</Value><Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value></ListValues></armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.general.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\SAMV71_DFP\1.1.61\include</Value><Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value></ListValues></armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="libraries\libboard\board.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\board_v71_xult.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\board_lowlevel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\dbg_console.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\led.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\math.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\mcan_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\rtc_calib.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\s25fl1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\include\syscalls.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\resources_v71\gcc\startup_samv71.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\resources_v71\system_samv71.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\source\board_lowlevel.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\source\dbg_console.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\source\led.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\source\syscalls.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libboard\source\trace.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\chip.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\compiler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\acc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\adc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\aes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\afec.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\afe_dma.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\arm_common_tables.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\arm_const_structs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\arm_math.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\cmsis_armcc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\cmsis_armcc_V6.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\cmsis_gcc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cm0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cm0plus.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cm3.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cm4.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cm7.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cmFunc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cmInstr.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_cmSimd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_sc000.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\cmsis\CMSIS\Include\core_sc300.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\dac_dma.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\efc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\exceptions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\flashd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\hsmci.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\icm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\isi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\iso7816_4.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\mcan.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\mcid.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\mediaLB.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\mpu.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\pio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\pio_capture.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\pio_it.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\pmc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\pwmc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\qspi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\qspi_dma.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\rstc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\rtc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\rtt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_acc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_aes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_afec.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_chipid.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_dacc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_efc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_gpbr.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_hsmci.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_icm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_isi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_matrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_mcan.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_mlb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_pio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_pmc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_qspi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_rstc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_rswdt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_rtc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_rtt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_sdramc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_smc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_ssc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_supc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_tc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_trng.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_twihs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_usart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_usbhs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_utmi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_wdt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\component\component_xdmac.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_acc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_aes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_afec0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_afec1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_chipid.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_dacc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_efc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_gmac.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_gpbr.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_hsmci.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_icm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_isi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_matrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_mcan0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_mcan1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_mlb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_pioa.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_piob.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_pioc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_piod.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_pioe.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_pmc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_pwm0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_pwm1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_qspi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_rstc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_rswdt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_rtc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_rtt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_sdramc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_smc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_spi0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_spi1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_ssc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_supc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_tc0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_tc1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_tc2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_tc3.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_trng.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_twihs0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_twihs1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_twihs2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_uart0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_uart1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_uart2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_uart3.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_uart4.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_usart0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_usart1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_usart2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_usbhs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_utmi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_wdt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\instance\instance_xdmac.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71j19.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71j20.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71j21.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71n19.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71n20.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71n21.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71q19.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71q20.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\pio\pio_samv71q21.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71j19.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71j20.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71j21.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71n19.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71n20.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71n21.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71q19.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71q20.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\samv71q21.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\samv71\system_samv71.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\sdramc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\smc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\spi_dma.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\ssc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\supc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\tc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\timetick.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\trace.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\trng.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\twi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\twid.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\uart_dma.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\usart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\usart_dma.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\usbhs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\video.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\wdt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\xdmac.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\xdmad.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\include\xdma_hardware_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\mediaLB.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\mpu.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\pio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\pmc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\ssc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\timetick.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\twid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\uart_dma.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\usart_dma.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\wdt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\xdmac.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\xdmad.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\libchip\source\xdma_hardware_interface.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\cfg-daemon\ucs_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\cfg-daemon\ucs_types_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\cfg-daemon\ucs_xrm_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_alm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_amd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_ams.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_amsallocator.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_amsmessage.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_amspool.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_ams_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_amtp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_api.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_attach.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_base.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_bc_diag.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_class.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_class_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_cmd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_cmd_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_dec.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_dl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_eh.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_eh_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_encoder.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_epm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_epm_pv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_exc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_factory.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_fsm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_gpio_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_i2c.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_i2c_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_inic.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_inic_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_jobs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_lldpool.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_lld_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_memory.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_memory_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_message.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_message_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_mgr.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_misc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_net.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_nodedis.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_nodeobserver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_nodeobserver_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_nsm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_nsm_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_obs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_pmchannel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_pmcmd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_pmevent.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_pmfifo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_pmfifos.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_pmp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_pool.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_prog.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_ret_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_rm_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_rm_pv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_rsm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_rsm_pv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_rtm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_rtm_pv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_rules.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_scheduler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_segmentation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_smm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_smm_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_sys_diag.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_telqueue.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_trace.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_trace_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_transceiver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_xrm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_xrmpool.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_xrm_pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_xrm_pv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_alm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_amd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_ams.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_amsmessage.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_amspool.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_amtp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_attach.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_base.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_bc_diag.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_class.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_cmd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_dec.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_dl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_eh.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_encoder.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_epm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_exc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_factory.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_fsm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_i2c.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_inic.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_inic_res.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_jobs.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_lldpool.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_message.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_mgr.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_misc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_net.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_nodedis.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_nodeobserver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_nsm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_obs.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_pmchannel.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_pmcmd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_pmevent.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_pmfifo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_pmfifos.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_pmp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_pool.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_rsm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_rtm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_scheduler.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_segmentation.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_smm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_sys_diag.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_telqueue.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_transceiver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_xrm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_xrmpool.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_xrm_res.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\board_init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\board_init.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Console.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Console.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\default_config.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\default_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\board\dim2_hardware.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\board\dim2_hardware.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\dim2_lld.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\dim2_lld.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\hal\dim2_errors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\hal\dim2_hal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\hal\dim2_hal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\hal\dim2_reg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\internal\ringbuffer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\driver\dim2\internal\ringbuffer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\component_gmac.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmac.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmac.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmacb_phy.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmacb_phy.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmacd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmacd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmac_init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmac_init.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\gmac\gmii.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ucsi_api.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ucsi_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ucsi_impl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="utils\md5\md5.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="utils\md5\md5.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="utils\utility.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="inc\" />
+    <Folder Include="libraries\" />
+    <Folder Include="libraries\libboard\" />
+    <Folder Include="libraries\libboard\include\" />
+    <Folder Include="libraries\libboard\resources_v71\" />
+    <Folder Include="libraries\libboard\resources_v71\gcc\" />
+    <Folder Include="libraries\libboard\resources_v71\nocache_region\" />
+    <Folder Include="libraries\libboard\resources_v71\nocache_region\gcc\" />
+    <Folder Include="libraries\libboard\source\" />
+    <Folder Include="libraries\libchip\" />
+    <Folder Include="libraries\libchip\include\" />
+    <Folder Include="libraries\libchip\include\cmsis\" />
+    <Folder Include="libraries\libchip\include\cmsis\CMSIS\" />
+    <Folder Include="libraries\libchip\include\cmsis\CMSIS\Include\" />
+    <Folder Include="libraries\libchip\include\cmsis\CMSIS\Lib\" />
+    <Folder Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\" />
+    <Folder Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\" />
+    <Folder Include="libraries\libchip\include\samv71\" />
+    <Folder Include="libraries\libchip\include\samv71\component\" />
+    <Folder Include="libraries\libchip\include\samv71\instance\" />
+    <Folder Include="libraries\libchip\include\samv71\pio\" />
+    <Folder Include="libraries\libchip\source\" />
+    <Folder Include="libraries\unicens\" />
+    <Folder Include="libraries\unicens\cfg-daemon\" />
+    <Folder Include="libraries\unicens\ucs2\" />
+    <Folder Include="libraries\unicens\ucs2\inc\" />
+    <Folder Include="libraries\unicens\ucs2\src\" />
+    <Folder Include="src\" />
+    <Folder Include="src\driver\" />
+    <Folder Include="src\driver\dim2\" />
+    <Folder Include="src\driver\dim2\board\" />
+    <Folder Include="src\driver\dim2\hal\" />
+    <Folder Include="src\driver\dim2\internal\" />
+    <Folder Include="src\gmac\" />
+    <Folder Include="utils\" />
+    <Folder Include="utils\md5\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libraries\libboard\resources_v71\nocache_region\gcc\samv71q21_flash.ld">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libboard\resources_v71\nocache_region\gcc\samv71q21_flash_tcm.ld">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libboard\resources_v71\nocache_region\gcc\samv71_flash.ld">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libboard\resources_v71\nocache_region\gcc\samv71_flash_tcm.ld">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM0b_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM0l_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM3b_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM3l_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM4bf_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM4b_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM4lf_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM4l_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM7bfdp_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM7bfsp_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM7b_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM7lfdp_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM7lfsp_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\ARM\arm_cortexM7l_math.lib">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\libarm_cortexM0l_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\libarm_cortexM3l_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\libarm_cortexM4l_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\libarm_cortexM7lfdp_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\libarm_cortexM7lfsp_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\GCC\libarm_cortexM7l_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\license.txt">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

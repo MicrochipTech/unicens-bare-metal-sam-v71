@@ -1,0 +1,8 @@
+.vs/
+audio-source/samv71-ucs/.vs
+audio-source/samv71-ucs/Debug
+audio-source/samv71-ucs/Release
+audio-source/samv71-ucs/*.atsln
+audio-source/samv71-ucs/*.componentinfo.xml
+audio-source/samv71-ucs/jlink.config
+audio-source/samv71-ucs/jlink.log
