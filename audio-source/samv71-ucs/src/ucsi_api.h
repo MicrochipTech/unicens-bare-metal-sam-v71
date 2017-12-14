@@ -227,7 +227,7 @@ extern void UCSI_CB_OnSetServiceTimer(void *pTag, uint16_t timeout);
 extern void UCSI_CB_OnNetworkState(void *pTag, bool isAvailable, uint16_t packetBandwidth, uint8_t amountOfNodes);
 
 /**
- * \brief Callback when ever an UNICENS forms a human readable message.
+ * \brief Callback when ever UNICENS forms a human readable message.
  *        This can be error events or when enabled also debug messages.
  * \note This function must be implemented by the integrator
  * \param pTag - Pointer given by the integrator by UCSI_Init
