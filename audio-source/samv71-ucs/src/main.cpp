@@ -128,7 +128,7 @@ int main()
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
     ConsoleAddPrefix("Source:");
-    ConsolePrintf(PRIO_HIGH, BLUE"------|V71 Unicens sample start (BUILD %s %s)|------"RESETCOLOR"\r\n", __DATE__, __TIME__);
+    ConsolePrintf(PRIO_HIGH, BLUE"------|V71 UNICENS sample start (BUILD %s %s)|------"RESETCOLOR"\r\n", __DATE__, __TIME__);
 
     // Initialize MOST DIM2 driver
     DIM2LLD_Init();
@@ -148,11 +148,11 @@ int main()
         }
     }
 
-    /* Initialize Unicens */
+    /* Initialize UNICENS */
     UCSI_Init(&m.unicens, &m);
     if (!UCSI_NewConfig(&m.unicens, PacketBandwidth, AllRoutes, RoutesSize, AllNodes, NodeSize))
     {
-        ConsolePrintf(PRIO_ERROR, RED"Could not enqueue new Unicens config"RESETCOLOR"\r\n");
+        ConsolePrintf(PRIO_ERROR, RED"Could not enqueue new UNICENS config"RESETCOLOR"\r\n");
         assert(false);
         while(true);
     }
@@ -161,7 +161,7 @@ int main()
     {
         ServiceMost();
         now = GetTicks();
-        /* Unicens Service */
+        /* UNICENS Service */
         if (m.unicensTrigger)
         {
             m.unicensTrigger = false;
@@ -256,7 +256,7 @@ uint16_t UCSI_CB_OnGetTime(void *pTag)
     return GetTicks();
 }
 
-/* Callback from Unicens Integration component */
+/* Callback from UNICENS Integration component */
 void UCSI_CB_OnSetServiceTimer(void *pTag, uint16_t timeout)
 {
     if (0 == timeout)
@@ -274,7 +274,7 @@ void UCSI_CB_OnNetworkState(void *pTag, bool isAvailable, uint16_t packetBandwid
     amountOfNodes);
 }
 
-/* Callback from Unicens Integration component */
+/* Callback from UNICENS Integration component */
 void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16_t vargsCnt, ...)
 {
     va_list argptr;
@@ -289,7 +289,7 @@ void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16
         ConsolePrintf(PRIO_HIGH, "%s\r\n", outbuf);
 }
 
-/* Callback from Unicens Integration component */
+/* Callback from UNICENS Integration component */
 void UCSI_CB_OnServiceRequired(void *pTag)
 {
     m.unicensTrigger = true;

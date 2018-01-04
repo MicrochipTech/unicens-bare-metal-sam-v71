@@ -138,7 +138,7 @@ typedef struct
 } UnicensCmdI2CWrite_t;
 
 /**
- * \brief Internal struct for Unicens Integration
+ * \brief Internal struct for UNICENS Integration
  */
 typedef struct
 {
