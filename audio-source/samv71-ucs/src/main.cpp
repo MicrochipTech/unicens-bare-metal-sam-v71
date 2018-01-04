@@ -335,10 +335,10 @@ void UCSI_CB_OnAmsMessageReceived(void *pTag)
     m.amsReceived = true;
 }
 
-void UCSI_CB_OnRouteResult(void *pTag, uint16_t routeId, bool isActive)
+void UCSI_CB_OnRouteResult(void *pTag, uint16_t routeId, bool isActive, uint16_t connectionLabel)
 {
-    ConsolePrintf(PRIO_HIGH, "Route id=0x%X isActive=%s\r\n", routeId,
-        (isActive ? "true" : "false"));
+    ConsolePrintf(PRIO_HIGH, "Route id=0x%X isActive=%s ConLabel=0x%X\r\n", routeId,
+        (isActive ? "true" : "false"), connectionLabel);
 }
 
 void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPinId, bool isHighState)
