@@ -269,9 +269,7 @@ void UCSI_CB_OnNetworkState(void *pTag, bool isAvailable, uint16_t packetBandwid
 {
     pTag = pTag;
     ConsolePrintf(PRIO_HIGH, YELLOW"Network isAvailable=%s, packetBW=%d, nodeCount=%d"RESETCOLOR"\r\n",
-    isAvailable ? "yes" : "no",
-    packetBandwidth,
-    amountOfNodes);
+        isAvailable ? "yes" : "no", packetBandwidth, amountOfNodes);
 }
 
 /* Callback from UNICENS Integration component */
@@ -344,7 +342,7 @@ void UCSI_CB_OnRouteResult(void *pTag, uint16_t routeId, bool isActive, uint16_t
 void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPinId, bool isHighState)
 {
     ConsolePrintf(PRIO_HIGH, "GPIO state changed, nodeAddress=0x%X, gpioPinId=%d, isHighState=%s\r\n",
-                  nodeAddress, gpioPinId, isHighState ? "yes" : "no");
+        nodeAddress, gpioPinId, isHighState ? "yes" : "no");
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
