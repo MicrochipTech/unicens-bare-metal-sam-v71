@@ -118,7 +118,8 @@ static const uint8_t audioData[] =
 /*                     PRIVTATE FUNCTION PROTOTYPES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-static void ServiceMost();
+static void ServiceMostCntrlRx();
+static void ServiceMostSyncTx();
 static void GmacTransferCallback(uint32_t status, void *pTag);
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -127,7 +128,6 @@ static void GmacTransferCallback(uint32_t status, void *pTag);
 
 int main()
 {
-    uint32_t i, now;
     BoardInit();
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
@@ -141,7 +141,7 @@ int main()
         ConsolePrintf(PRIO_ERROR, RED"MLB is not locked!"RESETCOLOR"\r\n");
         Wait(1000);
     }
-    for (i = 0; i < mlbConfigSize; i++)
+    for (uint32_t i = 0; i < mlbConfigSize; i++)
     {
         if (!DIM2LLD_SetupChannel(mlbConfig[i].cType, mlbConfig[i].dir, mlbConfig[i].instance, mlbConfig[i].channelAddress,
             mlbConfig[i].bufferSize, mlbConfig[i].subSize, mlbConfig[i].numberOfBuffers, mlbConfig[i].bufferOffset))
@@ -162,8 +162,9 @@ int main()
 
     while (1)
     {
-        ServiceMost();
-        now = GetTicks();
+        ServiceMostCntrlRx();
+        ServiceMostSyncTx();
+        uint32_t now = GetTicks();
         /* UNICENS Service */
         if (m.unicensTrigger)
         {
@@ -210,12 +211,11 @@ int main()
 /*                  PRIVATE FUNCTION IMPLEMENTATIONS                    */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-static void ServiceMost()
+static void ServiceMostCntrlRx()
 {
     uint16_t bufLen;
     uint8_t *pBuf;
     DIM2LLD_Service();
-    //RX Control Channel
     do
     {
         bufLen = DIM2LLD_GetRxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_RX, 0, 0, &pBuf, NULL, NULL);
@@ -238,8 +238,10 @@ static void ServiceMost()
         }
     }
     while (0 != bufLen);
+}
 
-    //TX Sync Channel
+static void ServiceMostSyncTx()
+{
     while(true)
     {
         uint8_t *pBuf;
