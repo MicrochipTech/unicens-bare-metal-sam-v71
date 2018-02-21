@@ -67,6 +67,8 @@ typedef struct
     bool unicensRunning;
     uint32_t unicensTimeout;
     bool unicensTrigger;
+    bool consoleTrigger;
+    bool gmacSendInProgress;
     bool amsReceived;
     bool pongReceived;
     uint32_t audioPos;
@@ -117,6 +119,7 @@ static const uint8_t audioData[] =
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 static void ServiceMost();
+static void GmacTransferCallback(uint32_t status, void *pTag);
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                         PUBLIC FUNCTIONS                             */
@@ -128,7 +131,6 @@ int main()
     BoardInit();
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
-    ConsoleAddPrefix("Source:");
     ConsolePrintf(PRIO_HIGH, BLUE"------|V71 UNICENS sample start (BUILD %s %s)|------"RESETCOLOR"\r\n", __DATE__, __TIME__);
 
     // Initialize MOST DIM2 driver
@@ -167,6 +169,11 @@ int main()
         {
             m.unicensTrigger = false;
             UCSI_Service(&m.unicens);
+        }
+        if (m.consoleTrigger)
+        {
+            m.consoleTrigger = false;
+            ConsoleService();
         }
         if (0 != m.unicensTimeout && now >= m.unicensTimeout)
         {
@@ -217,12 +224,12 @@ static void ServiceMost()
             if (m.unicensRunning)
             {
 #ifdef LLD_TRACE
-                ConsolePrintfStart( PRIO_HIGH, BLUE"%08lu MSG_RX(%d): ", GetTicks(), bufLen);
+                ConsolePrintf( PRIO_HIGH, BLUE"%08lu MSG_RX(%d): ", GetTicks(), bufLen);
                 for ( int16_t i = 0; i < bufLen; i++ )
                 {
-                    ConsolePrintfContinue( "%02X ", pBuf[i] );
+                    ConsolePrintf( PRIO_HIGH, "%02X ", pBuf[i] );
                 }
-                ConsolePrintfExit(RESETCOLOR"\n");
+                ConsolePrintf( PRIO_HIGH, RESETCOLOR"\n");
 #endif
                 if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
                     break;
@@ -303,12 +310,12 @@ void UCSI_CB_OnTxRequest(void *pTag,
     uint8_t *pBuf = NULL;
 #ifdef LLD_TRACE
 {
-    ConsolePrintfStart( PRIO_HIGH, BLUE"%08lu MSG_TX(%lu): ", GetTicks(), payloadLen);
+    ConsolePrintf( PRIO_HIGH, BLUE "%08lu MSG_TX(%lu): ", GetTicks(), payloadLen);
     for ( uint32_t i = 0; i < payloadLen; i++ )
     {
-        ConsolePrintfContinue( "%02X ", pPayload[i] );
+        ConsolePrintf( PRIO_HIGH, "%02X ", pPayload[i] );
     }
-    ConsolePrintfExit(RESETCOLOR"\n");
+    ConsolePrintf(PRIO_HIGH, RESETCOLOR "\n");
 }
 #endif
     uint32_t txMaxLen = 0;
@@ -357,7 +364,34 @@ void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPin
 /*                 CALLBACK FUNCTIONS FROM CONSOLE                      */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-void ConsoleCB_SendDatagram( uint8_t *pBuf, uint32_t len )
+void ConsoleCB_OnServiceNeeded(void)
 {
-    GMACD_Send(&gGmacd, pBuf, len, NULL, NULL, GMAC_QUE_0);
+    m.consoleTrigger = true;
+}
+
+bool ConsoleCB_SendDatagram( uint8_t *pEthHeader, uint32_t ethLen, uint8_t *pPayload, uint32_t payloadLen )
+{
+    sGmacSGList sgl;
+    sGmacSG sg[2];
+    if (m.gmacSendInProgress)
+        return false;
+    sg[0].pBuffer = pEthHeader;
+    sg[0].size = ethLen;
+    sg[1].pBuffer = pPayload;
+    sg[1].size = payloadLen;
+    sgl.sg = sg;
+    sgl.len = 2;
+    if (GMACD_OK != GMACD_SendSG(&gGmacd, &sgl, GmacTransferCallback, NULL, GMAC_QUE_0))
+        return false;
+    m.gmacSendInProgress = true;
+    return true;
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                  CALLBACK FUNCTIONS FROM GMAC                        */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+static void GmacTransferCallback(uint32_t status, void *pTag)
+{
+    m.gmacSendInProgress = false;
 }
