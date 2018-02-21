@@ -43,6 +43,7 @@
 #define BOARD_PMS_TX_SIZE       (72)
 #define CMD_QUEUE_LEN           (8)
 #define I2C_WRITE_MAX_LEN       (32)
+#define AMS_MSG_MAX_LEN         (45)
 
 #include <string.h>
 #include <stdarg.h>

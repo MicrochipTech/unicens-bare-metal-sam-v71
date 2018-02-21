@@ -64,6 +64,7 @@ typedef struct
 {
     uint32_t lastToggle;
     UCSI_Data_t unicens;
+    bool unicensRunning;
     uint32_t unicensTimeout;
     bool unicensTrigger;
     bool amsReceived;
@@ -213,18 +214,19 @@ static void ServiceMost()
         bufLen = DIM2LLD_GetRxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_RX, 0, 0, &pBuf, NULL, NULL);
         if (0 != bufLen)
         {
-#ifdef LLD_TRACE
+            if (m.unicensRunning)
             {
+#ifdef LLD_TRACE
                 ConsolePrintfStart( PRIO_HIGH, BLUE"%08lu MSG_RX(%d): ", GetTicks(), bufLen);
                 for ( int16_t i = 0; i < bufLen; i++ )
                 {
                     ConsolePrintfContinue( "%02X ", pBuf[i] );
                 }
                 ConsolePrintfExit(RESETCOLOR"\n");
-            }
 #endif
-            if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
-                break;
+                if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
+                    break;
+            }
             DIM2LLD_ReleaseRxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_RX, 0);
         }
     }
@@ -324,8 +326,14 @@ void UCSI_CB_OnTxRequest(void *pTag,
     DIM2LLD_SendTxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_TX, 0, payloadLen);
 }
 
+void UCSI_CB_OnStart(void *pTag)
+{
+    m.unicensRunning = true;
+}
+
 void UCSI_CB_OnStop(void *pTag)
 {
+    m.unicensRunning = false;
 }
 
 void UCSI_CB_OnAmsMessageReceived(void *pTag)
