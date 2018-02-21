@@ -91,13 +91,6 @@ extern "C"
      */
     /*----------------------------------------------------------*/
     void ConsoleSetPrio( ConsolePrio_t prio );
-    
-    /*----------------------------------------------------------*/
-    /*! \brief The given string is added before each statement.
-     *  \param prefix - Zero terminated string, which will be printed before each statement.
-     */
-    /*----------------------------------------------------------*/
-    void ConsoleAddPrefix(const char *prefix);
 
     /*----------------------------------------------------------*/
     /*! \brief Uses the board specific PRINT mechanism and provides thread and process safety.
@@ -106,37 +99,29 @@ extern "C"
     /*----------------------------------------------------------*/
     void ConsolePrintf( ConsolePrio_t prio, const char *statement, ... ) __attribute__ ((format (gnu_printf, 2, 3)));
 
-
     /*----------------------------------------------------------*/
-    /*! \brief Starts to print and stay blocked after exit of this function
+    /*! \brief Call this function in main()-context after ConsoleCB_OnServiceNeeded was raised.
      *
      */
     /*----------------------------------------------------------*/
-    void ConsolePrintfStart( ConsolePrio_t prio, const char *statement, ... ) __attribute__ ((format (gnu_printf, 2, 3)));
+    void ConsoleService( void );
 
     /*----------------------------------------------------------*/
-    /*! \brief Continue to print and stay blocked after exit of this function
-     *  \note ConsolePrintfStart must be called before and when finished ConsolePrintfExit must be called.
-     *  \note This function may be called multiple times.
+    /*! \brief Callback to integrators code whenever this component needs to be serviced.
+     *  \note Do not call ConsoleService() inside this function! Set flag, and call in main()-context.
+     *
      */
     /*----------------------------------------------------------*/
-    void ConsolePrintfContinue( const char *statement, ... ) __attribute__ ((format (gnu_printf, 1, 2)));
+    extern void ConsoleCB_OnServiceNeeded(void);
 
-    /*----------------------------------------------------------*/
-    /*! \brief Continue to print and unblock after finishing.
-     *  \note ConsolePrintfStart must be called before. ConsolePrintfContinue may have been called before multiple times.
-     */
-    /*----------------------------------------------------------*/
-    void ConsolePrintfExit( const char *statement, ... ) __attribute__ ((format (gnu_printf, 1, 2)));
-    
-    
     /*----------------------------------------------------------*/
     /*! \brief Callback to integrators code in order to send Ethernet datagram.
+     *  \return Integrator shall return true, if packet was enqueued successful. false, otherwise.
      *  \note Buffer is not valid after this call.
      *
      */
     /*----------------------------------------------------------*/
-    extern void ConsoleCB_SendDatagram( uint8_t *pBuf, uint32_t len );
+    extern bool ConsoleCB_SendDatagram( uint8_t *pEthHeader, uint32_t ethLen, uint8_t *pPayload, uint32_t payloadLen );
 #ifdef __cplusplus
 }
 #endif

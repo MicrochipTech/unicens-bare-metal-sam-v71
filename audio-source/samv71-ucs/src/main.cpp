@@ -64,8 +64,11 @@ typedef struct
 {
     uint32_t lastToggle;
     UCSI_Data_t unicens;
+    bool unicensRunning;
     uint32_t unicensTimeout;
     bool unicensTrigger;
+    bool consoleTrigger;
+    bool gmacSendInProgress;
     bool amsReceived;
     bool pongReceived;
     uint32_t audioPos;
@@ -115,7 +118,9 @@ static const uint8_t audioData[] =
 /*                     PRIVTATE FUNCTION PROTOTYPES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-static void ServiceMost();
+static void ServiceMostCntrlRx();
+static void ServiceMostSyncTx();
+static void GmacTransferCallback(uint32_t status, void *pTag);
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                         PUBLIC FUNCTIONS                             */
@@ -123,11 +128,9 @@ static void ServiceMost();
 
 int main()
 {
-    uint32_t i, now;
     BoardInit();
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
-    ConsoleAddPrefix("Source:");
     ConsolePrintf(PRIO_HIGH, BLUE"------|V71 UNICENS sample start (BUILD %s %s)|------"RESETCOLOR"\r\n", __DATE__, __TIME__);
 
     // Initialize MOST DIM2 driver
@@ -138,7 +141,7 @@ int main()
         ConsolePrintf(PRIO_ERROR, RED"MLB is not locked!"RESETCOLOR"\r\n");
         Wait(1000);
     }
-    for (i = 0; i < mlbConfigSize; i++)
+    for (uint32_t i = 0; i < mlbConfigSize; i++)
     {
         if (!DIM2LLD_SetupChannel(mlbConfig[i].cType, mlbConfig[i].dir, mlbConfig[i].instance, mlbConfig[i].channelAddress,
             mlbConfig[i].bufferSize, mlbConfig[i].subSize, mlbConfig[i].numberOfBuffers, mlbConfig[i].bufferOffset))
@@ -159,13 +162,19 @@ int main()
 
     while (1)
     {
-        ServiceMost();
-        now = GetTicks();
+        ServiceMostCntrlRx();
+        ServiceMostSyncTx();
+        uint32_t now = GetTicks();
         /* UNICENS Service */
         if (m.unicensTrigger)
         {
             m.unicensTrigger = false;
             UCSI_Service(&m.unicens);
+        }
+        if (m.consoleTrigger)
+        {
+            m.consoleTrigger = false;
+            ConsoleService();
         }
         if (0 != m.unicensTimeout && now >= m.unicensTimeout)
         {
@@ -202,35 +211,37 @@ int main()
 /*                  PRIVATE FUNCTION IMPLEMENTATIONS                    */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-static void ServiceMost()
+static void ServiceMostCntrlRx()
 {
     uint16_t bufLen;
     uint8_t *pBuf;
     DIM2LLD_Service();
-    //RX Control Channel
     do
     {
         bufLen = DIM2LLD_GetRxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_RX, 0, 0, &pBuf, NULL, NULL);
         if (0 != bufLen)
         {
-#ifdef LLD_TRACE
+            if (m.unicensRunning)
             {
-                ConsolePrintfStart( PRIO_HIGH, BLUE"%08lu MSG_RX(%d): ", GetTicks(), bufLen);
+#ifdef LLD_TRACE
+                ConsolePrintf( PRIO_HIGH, BLUE"%08lu MSG_RX(%d): ", GetTicks(), bufLen);
                 for ( int16_t i = 0; i < bufLen; i++ )
                 {
-                    ConsolePrintfContinue( "%02X ", pBuf[i] );
+                    ConsolePrintf( PRIO_HIGH, "%02X ", pBuf[i] );
                 }
-                ConsolePrintfExit(RESETCOLOR"\n");
-            }
+                ConsolePrintf( PRIO_HIGH, RESETCOLOR"\n");
 #endif
-            if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
-                break;
+                if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
+                    break;
+            }
             DIM2LLD_ReleaseRxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_RX, 0);
         }
     }
     while (0 != bufLen);
+}
 
-    //TX Sync Channel
+static void ServiceMostSyncTx()
+{
     while(true)
     {
         uint8_t *pBuf;
@@ -279,7 +290,7 @@ void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16
     char outbuf[300];
     pTag = pTag;
     va_start(argptr, vargsCnt);
-    vsprintf(outbuf, format, argptr);
+    vsnprintf(outbuf, sizeof(outbuf), format, argptr);
     va_end(argptr);
     if (isError)
         ConsolePrintf(PRIO_ERROR, RED"%s"RESETCOLOR"\r\n", outbuf);
@@ -301,12 +312,12 @@ void UCSI_CB_OnTxRequest(void *pTag,
     uint8_t *pBuf = NULL;
 #ifdef LLD_TRACE
 {
-    ConsolePrintfStart( PRIO_HIGH, BLUE"%08lu MSG_TX(%lu): ", GetTicks(), payloadLen);
+    ConsolePrintf( PRIO_HIGH, BLUE "%08lu MSG_TX(%lu): ", GetTicks(), payloadLen);
     for ( uint32_t i = 0; i < payloadLen; i++ )
     {
-        ConsolePrintfContinue( "%02X ", pPayload[i] );
+        ConsolePrintf( PRIO_HIGH, "%02X ", pPayload[i] );
     }
-    ConsolePrintfExit(RESETCOLOR"\n");
+    ConsolePrintf(PRIO_HIGH, RESETCOLOR "\n");
 }
 #endif
     uint32_t txMaxLen = 0;
@@ -324,8 +335,14 @@ void UCSI_CB_OnTxRequest(void *pTag,
     DIM2LLD_SendTxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_TX, 0, payloadLen);
 }
 
+void UCSI_CB_OnStart(void *pTag)
+{
+    m.unicensRunning = true;
+}
+
 void UCSI_CB_OnStop(void *pTag)
 {
+    m.unicensRunning = false;
 }
 
 void UCSI_CB_OnAmsMessageReceived(void *pTag)
@@ -349,7 +366,34 @@ void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPin
 /*                 CALLBACK FUNCTIONS FROM CONSOLE                      */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-void ConsoleCB_SendDatagram( uint8_t *pBuf, uint32_t len )
+void ConsoleCB_OnServiceNeeded(void)
 {
-    GMACD_Send(&gGmacd, pBuf, len, NULL, NULL, GMAC_QUE_0);
+    m.consoleTrigger = true;
+}
+
+bool ConsoleCB_SendDatagram( uint8_t *pEthHeader, uint32_t ethLen, uint8_t *pPayload, uint32_t payloadLen )
+{
+    sGmacSGList sgl;
+    sGmacSG sg[2];
+    if (m.gmacSendInProgress)
+        return false;
+    sg[0].pBuffer = pEthHeader;
+    sg[0].size = ethLen;
+    sg[1].pBuffer = pPayload;
+    sg[1].size = payloadLen;
+    sgl.sg = sg;
+    sgl.len = 2;
+    if (GMACD_OK != GMACD_SendSG(&gGmacd, &sgl, GmacTransferCallback, NULL, GMAC_QUE_0))
+        return false;
+    m.gmacSendInProgress = true;
+    return true;
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                  CALLBACK FUNCTIONS FROM GMAC                        */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+static void GmacTransferCallback(uint32_t status, void *pTag)
+{
+    m.gmacSendInProgress = false;
 }
