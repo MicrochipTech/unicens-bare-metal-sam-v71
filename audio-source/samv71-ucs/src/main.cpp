@@ -233,6 +233,7 @@ static void ServiceMostCntrlRx()
 #endif
                 if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
                 {
+                    ConsolePrintf(PRIO_ERROR, "RX buffer overflow\r\n");
                     /* UNICENS is busy. Try to reactive it, by calling service routine */
                     m.unicensTrigger = true;
                     break;
