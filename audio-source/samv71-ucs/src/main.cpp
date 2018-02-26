@@ -232,7 +232,11 @@ static void ServiceMostCntrlRx()
                 ConsolePrintf( PRIO_HIGH, RESETCOLOR"\n");
 #endif
                 if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
+                {
+                    /* UNICENS is busy. Try to reactive it, by calling service routine */
+                    m.unicensTrigger = true;
                     break;
+                }
             }
             DIM2LLD_ReleaseRxData(DIM2LLD_ChannelType_Control, DIM2LLD_ChannelDirection_RX, 0);
         }
