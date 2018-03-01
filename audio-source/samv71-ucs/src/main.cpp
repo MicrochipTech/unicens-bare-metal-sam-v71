@@ -115,7 +115,7 @@ static const uint8_t audioData[] =
 };
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                     PRIVTATE FUNCTION PROTOTYPES                     */
+/*                      PRIVATE FUNCTION PROTOTYPES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 static void ServiceMostCntrlRx();
@@ -272,7 +272,6 @@ uint16_t UCSI_CB_OnGetTime(void *pTag)
     return GetTicks();
 }
 
-/* Callback from UNICENS Integration component */
 void UCSI_CB_OnSetServiceTimer(void *pTag, uint16_t timeout)
 {
     if (0 == timeout)
@@ -303,7 +302,6 @@ void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16
         ConsolePrintf(PRIO_HIGH, "%s\r\n", outbuf);
 }
 
-/* Callback from UNICENS Integration component */
 void UCSI_CB_OnServiceRequired(void *pTag)
 {
     m.unicensTrigger = true;
