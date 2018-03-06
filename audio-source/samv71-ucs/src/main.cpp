@@ -131,14 +131,14 @@ int main()
     BoardInit();
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
-    ConsolePrintf(PRIO_HIGH, BLUE"------|V71 UNICENS sample start (BUILD %s %s)|------"RESETCOLOR"\r\n", __DATE__, __TIME__);
+    ConsolePrintf(PRIO_HIGH, BLUE "------|V71 UNICENS sample start (BUILD %s %s)|------" RESETCOLOR "\r\n", __DATE__, __TIME__);
 
     // Initialize MOST DIM2 driver
     DIM2LLD_Init();
     Wait(100);
     while (!DIM2LLD_IsMlbLocked())
     {
-        ConsolePrintf(PRIO_ERROR, RED"MLB is not locked!"RESETCOLOR"\r\n");
+        ConsolePrintf(PRIO_ERROR, RED "MLB is not locked!" RESETCOLOR "\r\n");
         Wait(1000);
     }
     for (uint32_t i = 0; i < mlbConfigSize; i++)
@@ -155,7 +155,7 @@ int main()
     UCSI_Init(&m.unicens, &m);
     if (!UCSI_NewConfig(&m.unicens, PacketBandwidth, AllRoutes, RoutesSize, AllNodes, NodeSize))
     {
-        ConsolePrintf(PRIO_ERROR, RED"Could not enqueue new UNICENS config"RESETCOLOR"\r\n");
+        ConsolePrintf(PRIO_ERROR, RED "Could not enqueue new UNICENS config" RESETCOLOR "\r\n");
         assert(false);
         while(true);
     }
@@ -224,7 +224,7 @@ static void ServiceMostCntrlRx()
             if (m.unicensRunning)
             {
 #ifdef LLD_TRACE
-                ConsolePrintf( PRIO_HIGH, BLUE"%08lu MSG_RX(%d): ", GetTicks(), bufLen);
+                ConsolePrintf( PRIO_HIGH, BLUE "%08lu MSG_RX(%d): ", GetTicks(), bufLen);
                 for ( int16_t i = 0; i < bufLen; i++ )
                 {
                     ConsolePrintf( PRIO_HIGH, "%02X ", pBuf[i] );
@@ -283,7 +283,7 @@ void UCSI_CB_OnSetServiceTimer(void *pTag, uint16_t timeout)
 void UCSI_CB_OnNetworkState(void *pTag, bool isAvailable, uint16_t packetBandwidth, uint8_t amountOfNodes)
 {
     pTag = pTag;
-    ConsolePrintf(PRIO_HIGH, YELLOW"Network isAvailable=%s, packetBW=%d, nodeCount=%d"RESETCOLOR"\r\n",
+    ConsolePrintf(PRIO_HIGH, YELLOW "Network isAvailable=%s, packetBW=%d, nodeCount=%d" RESETCOLOR "\r\n",
         isAvailable ? "yes" : "no", packetBandwidth, amountOfNodes);
 }
 
@@ -297,7 +297,7 @@ void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16
     vsnprintf(outbuf, sizeof(outbuf), format, argptr);
     va_end(argptr);
     if (isError)
-        ConsolePrintf(PRIO_ERROR, RED"%s"RESETCOLOR"\r\n", outbuf);
+        ConsolePrintf(PRIO_ERROR, RED "%s" RESETCOLOR "\r\n", outbuf);
     else
         ConsolePrintf(PRIO_HIGH, "%s\r\n", outbuf);
 }
@@ -330,7 +330,7 @@ void UCSI_CB_OnTxRequest(void *pTag,
     }
     if (NULL == pBuf || txMaxLen < payloadLen)
     {
-        ConsolePrintf(PRIO_ERROR, RED"UCSI_CB_SendMostMessage buffer is too small! %lu < %lu"RESETCOLOR"\r\n", txMaxLen, payloadLen);
+        ConsolePrintf(PRIO_ERROR, RED "UCSI_CB_SendMostMessage buffer is too small! %lu < %lu" RESETCOLOR "\r\n", txMaxLen, payloadLen);
         assert(false);
         return;
     }
