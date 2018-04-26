@@ -5,16 +5,15 @@ This project is a bare metal example integration of the [UNICENS library](https:
 ### Needed components
 
 __Hardware:__
-* Atmel SAM V71 Xplained Ultra Evaluation Kit
+* [Atmel SAM V71 Xplained Ultra Evaluation Kit](http://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=atsamv71-xult)
 * Atmel SAM-ICE (min. HW-Version 7)
 * OS81118 Phy+Board Variant 3 or OS81210/OS81212/OS81214 Phy+Board Variant 3
-* Depending on your use case, you can start with any devices of the K2L Slim Board Family
-    https://www.k2l.de/products/34/MOST150%20Slim%20Board%20Family/
+* Depending on your use case, you can start with any devices of the [K2L Slim Board Familiy](https://www.k2l.de/products/34/MOST150%20Slim%20Board%20Family/)
 
 __Software:__
 * Microsoft Windows 7 or newer
-* Atmel Studio 7
-    http://www.microchip.com/development-tools/atmel-studio-7
+* [Atmel Studio 7](http://www.microchip.com/development-tools/atmel-studio-7)
+* [Git for Windows](https://gitforwindows.org)
     
 To get the source code, enter:
 ```bash
