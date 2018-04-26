@@ -287,7 +287,6 @@ void UCSI_CB_OnNetworkState(void *pTag, bool isAvailable, uint16_t packetBandwid
         isAvailable ? "yes" : "no", packetBandwidth, amountOfNodes);
 }
 
-/* Callback from UNICENS Integration component */
 void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16_t vargsCnt, ...)
 {
     va_list argptr;

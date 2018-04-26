@@ -30,6 +30,10 @@
 #include <assert.h>
 #include <stdio.h>
 #include "ucsi_api.h"
+/************************************************************************/
+/* Private Definitions and variables                                    */
+/************************************************************************/
+#define TRACE_BUFFER_SZ 200
 
 /************************************************************************/
 /* Private Definitions and variables                                    */
@@ -220,9 +224,9 @@ void UCSI_Service(UCSI_Data_t *my)
                 popEntry = false;
             else
                 UCSI_CB_OnUserMessage(my->tag, true, "UnicensCmd_GpioWritePort failed", 0);
-            break;            
+            break;
         case UnicensCmd_I2CWrite:
-            if (UCS_RET_SUCCESS == Ucs_I2c_WritePort(my->unicens, e->val.I2CWrite.destination, 0x0F00, 
+            if (UCS_RET_SUCCESS == Ucs_I2c_WritePort(my->unicens, e->val.I2CWrite.destination, 0x0F00,
                 (e->val.I2CWrite.isBurst ? UCS_I2C_BURST_MODE : UCS_I2C_DEFAULT_MODE), e->val.I2CWrite.blockCount,
                 e->val.I2CWrite.slaveAddr, e->val.I2CWrite.timeout, e->val.I2CWrite.dataLen, e->val.I2CWrite.data, OnUcsI2CWrite))
                 popEntry = false;
@@ -511,7 +515,7 @@ static void OnUnicensAppTimer( uint16_t timeout, void *user_ptr )
 
 static void OnUnicensDebugErrorMsg(Msg_MostTel_t *m, void *user_ptr)
 {
-    char buffer[100];
+    char buffer[TRACE_BUFFER_SZ];
     char val[5];
     uint8_t i;
     UCSI_Data_t *my = (UCSI_Data_t *)user_ptr;
@@ -872,7 +876,6 @@ static void OnUcsAmsWrite(Ucs_AmsTx_Msg_t* msg_ptr, Ucs_AmsTx_Result_t result, U
 /************************************************************************/
 #if defined(UCS_TR_ERROR) || defined(UCS_TR_INFO)
 #include <stdio.h>
-#define TRACE_BUFFER_SZ 200
 void App_TraceError(void *ucs_user_ptr, const char module_str[], const char entry_str[], uint16_t vargs_cnt, ...)
 {
     va_list argptr;
