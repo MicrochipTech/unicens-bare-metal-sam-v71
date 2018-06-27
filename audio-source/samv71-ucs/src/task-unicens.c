@@ -73,7 +73,6 @@ typedef struct
     uint32_t unicensTimeout;
     bool unicensTrigger;
     bool amsReceived;
-    bool pongReceived;
     uint32_t audioPos;
 } LocalVar_t;
 
@@ -190,8 +189,6 @@ void TaskUnicens_Service(void)
         if (UCSI_GetAmsMessage(&m.unicens, &amsId, &sourceAddress, &pBuf, &len))
         {
             ConsolePrintf(PRIO_HIGH, "Received AMS, id=0x%X, source=0x%X, len=%lu\r\n", amsId, sourceAddress, len);
-            if (0 == amsId)
-            m.pongReceived = true;
             UCSI_ReleaseAmsMessage(&m.unicens);
         }
         else assert(false);
