@@ -259,6 +259,12 @@ static void ServiceMostSyncTx()
 /*                  CALLBACK FUNCTIONS FROM UNICENS                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
+void UCSI_CB_OnCommandResult(void *pTag, UnicensCmd_t command, bool success, uint16_t nodeAddress)
+{
+    if (!success)
+        ConsolePrintf(PRIO_ERROR, RED "OnCommandResult, cmd=0x%X, node=0x%X failed" RESETCOLOR "\r\n", command, nodeAddress);
+}
+
 uint16_t UCSI_CB_OnGetTime(void *pTag)
 {
     return GetTicks();
@@ -354,4 +360,10 @@ void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPin
 {
     ConsolePrintf(PRIO_HIGH, "GPIO state changed, nodeAddress=0x%X, gpioPinId=%d, isHighState=%s\r\n",
     nodeAddress, gpioPinId, isHighState ? "yes" : "no");
+}
+
+void UCSI_CB_OnI2CRead(void *pTag, bool success, uint16_t targetAddress, uint8_t slaveAddr, const uint8_t *pBuffer, uint32_t bufLen)
+{
+    if (!success)
+        ConsolePrintf(PRIO_ERROR, RED "I2C read failed, node=0x%X" RESETCOLOR "\r\n", targetAddress);
 }
