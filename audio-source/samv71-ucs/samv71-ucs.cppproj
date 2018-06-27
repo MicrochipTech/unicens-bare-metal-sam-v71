@@ -1287,6 +1287,12 @@
     <Compile Include="src\main.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\task-unicens.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\task-unicens.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="utils\md5\md5.c">
       <SubType>compile</SubType>
     </Compile>

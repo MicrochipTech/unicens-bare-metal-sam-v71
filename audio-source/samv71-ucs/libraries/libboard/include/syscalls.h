@@ -27,6 +27,9 @@
 /* EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
 /* ---------------------------------------------------------------------------- */
 
+#ifndef SYSCALLS_H
+#define SYSCALLS_H
+
 /**
   * \file syscalls.h
   *
@@ -63,3 +66,5 @@ extern int _lseek(int file, int ptr, int dir);
 extern int _read(int file, char *ptr, int len);
 
 extern int _write(int file, char *ptr, int len);
+
+#endif /*SYSCALLS_H*/
