@@ -114,7 +114,7 @@ uint32_t DIM2LLD_GetQueueElementCount(DIM2LLD_ChannelType_t cType, DIM2LLD_Chann
 * \return Returns the amount of bytes which can be accessed by the pBuffer.
 */
 uint16_t DIM2LLD_GetRxData(DIM2LLD_ChannelType_t cType, DIM2LLD_ChannelDirection_t dir, 
-                           uint8_t instance, uint32_t pos, uint8_t **pBuffer, uint16_t *pOffset, uint8_t *pPacketCounter);
+                           uint8_t instance, uint32_t pos, const uint8_t **pBuffer, uint16_t *pOffset, uint8_t *pPacketCounter);
 
 
 /** \brief Releases the passed data from the DIM2LLD_GetRxData function call. Call DIM2LLD_ReleaseRxData only in case you received valid data from DIM2LLD_GetRxData (Not if returned NULL).
