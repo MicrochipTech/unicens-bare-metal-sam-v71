@@ -39,7 +39,7 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.samice</avrtool>
-    <avrtoolserialnumber>28015392</avrtoolserialnumber>
+    <avrtoolserialnumber>28018357</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0xA1220E00</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_samice>
       <ToolOptions>
@@ -49,7 +49,7 @@
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
-      <ToolNumber>28015392</ToolNumber>
+      <ToolNumber>28018357</ToolNumber>
       <ToolName>SAM-ICE</ToolName>
     </com_atmel_avrdbg_tool_samice>
     <avrtoolinterface>SWD</avrtoolinterface>
@@ -65,6 +65,8 @@
       </ToolNumber>
       <ToolName xmlns="">Custom Programming Tool</ToolName>
     </custom>
+    <ResetRule>0</ResetRule>
+    <EraseKey />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -81,7 +83,7 @@
   <Value>GMAC_ZEROCOPY</Value>
   <Value>NDEBUG</Value>
 </ListValues></armgcc.compiler.symbols.DefSymbols>
-  <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcc.compiler.optimization.EnableFastMath>True</armgcc.compiler.optimization.EnableFastMath>
@@ -92,7 +94,7 @@
   <Value>GMAC_ZEROCOPY</Value>
   <Value>NDEBUG</Value>
 </ListValues></armgcccpp.compiler.symbols.DefSymbols>
-  <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
   <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcccpp.compiler.optimization.EnableFastMath>True</armgcccpp.compiler.optimization.EnableFastMath>
@@ -128,7 +130,7 @@
   <Value>DEBUG</Value>
   <Value>ENABLE_TCM</Value>
 </ListValues></armgcc.compiler.symbols.DefSymbols>
-  <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.optimization.PrepareDataForGarbageCollection>False</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcc.compiler.optimization.EnableFastMath>False</armgcc.compiler.optimization.EnableFastMath>
@@ -141,7 +143,7 @@
   <Value>DEBUG</Value>
   <Value>ENABLE_TCM</Value>
 </ListValues></armgcccpp.compiler.symbols.DefSymbols>
-  <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
   <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>False</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcccpp.compiler.optimization.EnableFastMath>False</armgcccpp.compiler.optimization.EnableFastMath>
@@ -163,6 +165,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="libraries\console\Console.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\console\Console.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\libboard\board.h">
       <SubType>compile</SubType>
     </Compile>
@@ -793,6 +801,15 @@
     <Compile Include="libraries\libchip\source\xdma_hardware_interface.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\ucsi\ucsi_api.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\ucsi\ucsi_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\ucsi\ucsi_impl.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\unicens\cfg-daemon\ucs_cfg.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1201,12 +1218,6 @@
     <Compile Include="src\board_init.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Console.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Console.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\default_config.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1276,13 +1287,16 @@
     <Compile Include="src\main.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ucsi_api.h">
+    <Compile Include="src\task-audio.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ucsi_cfg.h">
+    <Compile Include="src\task-audio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ucsi_impl.c">
+    <Compile Include="src\task-unicens.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\task-unicens.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="utils\md5\md5.c">
@@ -1298,6 +1312,7 @@
   <ItemGroup>
     <Folder Include="inc\" />
     <Folder Include="libraries\" />
+    <Folder Include="libraries\console\" />
     <Folder Include="libraries\libboard\" />
     <Folder Include="libraries\libboard\include\" />
     <Folder Include="libraries\libboard\resources_v71\" />
@@ -1318,6 +1333,7 @@
     <Folder Include="libraries\libchip\include\samv71\instance\" />
     <Folder Include="libraries\libchip\include\samv71\pio\" />
     <Folder Include="libraries\libchip\source\" />
+    <Folder Include="libraries\ucsi\" />
     <Folder Include="libraries\unicens\" />
     <Folder Include="libraries\unicens\cfg-daemon\" />
     <Folder Include="libraries\unicens\ucs2\" />

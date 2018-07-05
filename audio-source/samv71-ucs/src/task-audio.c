@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------------------------*/
-/* Board Init Component                                                                           */
-/* Copyright 2017, Microchip Technology Inc. and its subsidiaries.                                */
+/* Audio Processing Task Implementation                                                           */
+/* Copyright 2018, Microchip Technology Inc. and its subsidiaries.                                */
 /*                                                                                                */
 /* Redistribution and use in source and binary forms, with or without                             */
 /* modification, are permitted provided that the following conditions are met:                    */
@@ -28,67 +28,72 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
 /*------------------------------------------------------------------------------------------------*/
 
-/*----------------------------------------------------------*/
-/*! \file
- *  \brief This file contains board initialization code.
- *         It was introduced to reduce the complexity of the main.cpp file.
- */
-/*----------------------------------------------------------*/
-#ifndef _BOARDINIT_H_
-#define _BOARDINIT_H_
-#ifdef __cplusplus
-extern "C"
+#include <string.h>
+#include <assert.h>
+#include "Console.h"
+#include "dim2_lld.h"
+#include "task-audio.h"
+
+/* #define ENABLE_AUDIO_RX */
+
+struct TaskAudioVars
 {
-#endif
-
-#include "board.h"
-#include "gmacd.h"
-#include "gmac_init.h"
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*       Public available driver, initialized by this component         */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-
-/** TWI driver instance */
-extern Twid twid;
-
-/** The GMAC driver instance */
-extern sGmacd gGmacd;
-
-/** The MACB driver instance */
-extern GMacb gGmacb; ///
-
-/** The DMA driver instance */
-extern sXdmad xdma;
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                         Public typedefs                              */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-
-typedef enum
+    bool initialized;
+    uint32_t audioPos;
+};
+static struct TaskAudioVars m = { 0 };
+static const uint8_t audioData[] =
 {
-    BoardButton_SW0,
-    BoardButton_SW1
-} Board_Button_t;
+    #include "beat_be.h"
+};
 
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                         Public functions                             */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-/**
- * \brief Initializes the Board Support Component
- * \note Must be called before any other function of this component
- */
-void Board_Init(void);
+static bool ProcessStreamingData(const uint8_t *pRxBuf, uint32_t rxLen, uint8_t *pTxBuf, uint32_t txLen);
 
-/**
- * \brief Checks if the given button is pressed
- * \param button - Enumeration specifying the button to check
- * \return true, if the button is currently pressed. false, otherwise
- */
-bool Board_IsButtonPressed(Board_Button_t button);
-
-#ifdef __cplusplus
+bool TaskAudio_Init(void)
+{
+    memset(&m, 0, sizeof(m));
+    m.initialized = true;
+    return true;
 }
+
+void TaskAudio_Service(void)
+{
+    while(true)
+    {
+        uint8_t *pTxBuf = NULL;
+        const uint8_t *pRxBuf = NULL;
+        uint16_t rxLen = 0;
+        uint16_t txLen = 0;
+#if ENABLE_AUDIO_RX
+        rxLen = DIM2LLD_GetRxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_RX, 0, 0, &pRxBuf, NULL, NULL);
+        if (0 == rxLen)
+            break;
 #endif
-#endif /* _BOARDINIT_H_ */
+        txLen = DIM2LLD_GetTxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_TX, 0, &pTxBuf);
+        if (0 == txLen)
+            break;
+        if (ProcessStreamingData(pRxBuf, rxLen, pTxBuf, txLen))
+        {
+#if ENABLE_AUDIO_RX
+            DIM2LLD_ReleaseRxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_RX, 0);
+#endif
+            DIM2LLD_SendTxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_TX, 0, txLen);
+        }
+        else break;
+    }
+}
+
+static bool ProcessStreamingData(const uint8_t *pRxBuf, uint32_t rxLen, uint8_t *pTxBuf, uint32_t txLen)
+{
+    uint32_t i;
+    if (!m.initialized)
+        return false;
+    for (i = 0; i < txLen; i++)
+    {
+        pTxBuf[i] = audioData[m.audioPos++];
+        if (sizeof(audioData) <= m.audioPos)
+            m.audioPos = 0;
+    }
+    return true;
+}

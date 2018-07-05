@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------------------------*/
-/* Board Init Component                                                                           */
-/* Copyright 2017, Microchip Technology Inc. and its subsidiaries.                                */
+/* Audio Processing Task Implementation                                                           */
+/* Copyright 2018, Microchip Technology Inc. and its subsidiaries.                                */
 /*                                                                                                */
 /* Redistribution and use in source and binary forms, with or without                             */
 /* modification, are permitted provided that the following conditions are met:                    */
@@ -28,67 +28,34 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
 /*------------------------------------------------------------------------------------------------*/
 
-/*----------------------------------------------------------*/
-/*! \file
- *  \brief This file contains board initialization code.
- *         It was introduced to reduce the complexity of the main.cpp file.
- */
-/*----------------------------------------------------------*/
-#ifndef _BOARDINIT_H_
-#define _BOARDINIT_H_
+#ifndef TASK_AUDIO_H_
+#define TASK_AUDIO_H_
+
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#include "board.h"
-#include "gmacd.h"
-#include "gmac_init.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*       Public available driver, initialized by this component         */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-
-/** TWI driver instance */
-extern Twid twid;
-
-/** The GMAC driver instance */
-extern sGmacd gGmacd;
-
-/** The MACB driver instance */
-extern GMacb gGmacb; ///
-
-/** The DMA driver instance */
-extern sXdmad xdma;
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                         Public typedefs                              */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-
-typedef enum
-{
-    BoardButton_SW0,
-    BoardButton_SW1
-} Board_Button_t;
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                         Public functions                             */
+/*                            Public API                                */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 /**
- * \brief Initializes the Board Support Component
+ * \brief Initializes the Audio Task
  * \note Must be called before any other function of this component
+ * \return true, if initialization was successful. false, otherwise, do not call any other function in that case
  */
-void Board_Init(void);
+bool TaskAudio_Init(void);
 
 /**
- * \brief Checks if the given button is pressed
- * \param button - Enumeration specifying the button to check
- * \return true, if the button is currently pressed. false, otherwise
+ * \brief Gives the Audio Task time to maintain it's service routines
  */
-bool Board_IsButtonPressed(Board_Button_t button);
+void TaskAudio_Service(void);
 
 #ifdef __cplusplus
 }
 #endif
-#endif /* _BOARDINIT_H_ */
+
+#endif /* TASK_AUDIO_H_ */

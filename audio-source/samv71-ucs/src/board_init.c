@@ -57,7 +57,6 @@ static const Pin gmacResetPin   = BOARD_GMAC_RESET_PIN;
 
 /** The PINs for TWI*/
 static const Pin twiPins[]      = PINS_TWI0;
-static const Pin twiClkPin[]   = { {PIO_PA4A_TWCK0, PIOA, ID_PIOA, PIO_OUTPUT_1, PIO_DEFAULT} };
 /** TWI clock frequency in Hz. */
 #define TWCK            400000
 /** Slave address of twi_eeprom AT24MAC.*/
@@ -73,11 +72,14 @@ static const Pin twiClkPin[]   = { {PIO_PA4A_TWCK0, PIOA, ID_PIOA, PIO_OUTPUT_1,
 /** TWI0 base address for EEPROM device */
 #define BOARD_BASE_TWI_EEPROM TWIHS0
 
+/* Push button pin */
+static const Pin pushbutton[] = {PIN_PUSHBUTTON_0, PIN_PUSHBUTTON_1};
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                         PUBLIC FUNCTIONS                             */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-void BoardInit()
+void Board_Init()
 {
     /* Initialize the SAM system */
     WDT_Disable(WDT);
@@ -103,16 +105,15 @@ void BoardInit()
     NVIC_ClearPendingIRQ(GMAC_IRQn);
     NVIC_EnableIRQ(GMAC_IRQn);
 
-    // Clear I2C bus
-    PIO_Configure(twiClkPin, ARRAY_SIZE(twiClkPin));
-    for (uint8_t pulses = 0; pulses < 20; pulses++)
-    {
-        PIO_Set(&twiClkPin[0]);
-        for (uint32_t dly = 0; dly < 800; dly++) { /* delay */ }
-        PIO_Clear(&twiClkPin[0]);
-        for (uint32_t dly = 0; dly < 800; dly++) { /* delay */ }
-    }
-    PIO_Set(&twiClkPin[0]);
+    // Configure Board Pushbuttons
+    // SW1 is a ERASE system function, switch it to port function
+    MATRIX->CCFG_SYSIO |= (1u << 12);
+    // have to disable the pull down on PB12 for SW1 before the pull up can be enabled
+    PIOB->PIO_PPDDR = 1 << 12;
+    PIO_Configure(pushbutton, PIO_LISTSIZE(pushbutton));
+    // Adjust pio debounce filter parameters
+    PIO_SetDebounceFilter(&pushbutton[0], 10);
+    PIO_SetDebounceFilter(&pushbutton[1], 10);
 
     /* Configure TWI pins. */
     PIO_Configure(twiPins, ARRAY_SIZE(twiPins));
@@ -150,6 +151,19 @@ void BoardInit()
     //Phy takes a while until ready, do not wait for it in release variant
     Wait(5000);
 #endif
+}
+
+bool Board_IsButtonPressed(Board_Button_t button)
+{
+    switch(button)
+    {
+    case BoardButton_SW0:
+        return !PIO_Get(&pushbutton[0]);
+    case BoardButton_SW1:
+        return !PIO_Get(&pushbutton[1]);
+    }
+    assert(false);
+    return false;
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

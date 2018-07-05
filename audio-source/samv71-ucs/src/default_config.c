@@ -1,31 +1,6 @@
 /*------------------------------------------------------------------------------------------------*/
-/* UNICENS Static Network Configuration                                                           */
-/* Copyright 2017, Microchip Technology Inc. and its subsidiaries.                                */
-/*                                                                                                */
-/* Redistribution and use in source and binary forms, with or without                             */
-/* modification, are permitted provided that the following conditions are met:                    */
-/*                                                                                                */
-/* 1. Redistributions of source code must retain the above copyright notice, this                 */
-/*    list of conditions and the following disclaimer.                                            */
-/*                                                                                                */
-/* 2. Redistributions in binary form must reproduce the above copyright notice,                   */
-/*    this list of conditions and the following disclaimer in the documentation                   */
-/*    and/or other materials provided with the distribution.                                      */
-/*                                                                                                */
-/* 3. Neither the name of the copyright holder nor the names of its                               */
-/*    contributors may be used to endorse or promote products derived from                        */
-/*    this software without specific prior written permission.                                    */
-/*                                                                                                */
-/* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'                    */
-/* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE                      */
-/* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE                 */
-/* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE                   */
-/* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL                     */
-/* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR                     */
-/* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER                     */
-/* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,                  */
-/* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE                  */
-/* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
+/* UNICENS Generated Network Configuration                                                        */
+/* Generator: xml2struct for Windows V4.1.0                                                       */
 /*------------------------------------------------------------------------------------------------*/
 #include "ucs_api.h"
 
@@ -45,7 +20,7 @@ Ucs_Xrm_MlbSocket_t SrcOfRoute1_MlbSocket = {
     UCS_MLB_SCKT_SYNC_DATA,
     4,
     0x0A };
-Ucs_Xrm_MostSocket_t SrcOfRoute1_MostSocket = { 
+Ucs_Xrm_MostSocket_t SrcOfRoute1_NetworkSocket = { 
     UCS_XRM_RC_TYPE_MOST_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_OUTPUT,
@@ -54,16 +29,16 @@ Ucs_Xrm_MostSocket_t SrcOfRoute1_MostSocket = {
 Ucs_Xrm_SyncCon_t SrcOfRoute1_SyncCon = { 
     UCS_XRM_RC_TYPE_SYNC_CON,
     &SrcOfRoute1_MlbSocket,
-    &SrcOfRoute1_MostSocket,
+    &SrcOfRoute1_NetworkSocket,
     UCS_SYNC_MUTE_MODE_NO_MUTING,
     0 };
 Ucs_Xrm_ResObject_t *SrcOfRoute1_JobList[] = {
     &SrcOfRoute1_DcPort,
     &SrcOfRoute1_MlbSocket,
-    &SrcOfRoute1_MostSocket,
+    &SrcOfRoute1_NetworkSocket,
     &SrcOfRoute1_SyncCon,
     NULL };
-Ucs_Xrm_MostSocket_t SnkOfRoute1_MostSocket = { 
+Ucs_Xrm_MostSocket_t SnkOfRoute1_NetworkSocket = { 
     UCS_XRM_RC_TYPE_MOST_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_INPUT,
@@ -82,18 +57,18 @@ Ucs_Xrm_MlbSocket_t SnkOfRoute1_MlbSocket = {
     0x0A };
 Ucs_Xrm_SyncCon_t SnkOfRoute1_SyncCon = { 
     UCS_XRM_RC_TYPE_SYNC_CON,
-    &SnkOfRoute1_MostSocket,
+    &SnkOfRoute1_NetworkSocket,
     &SnkOfRoute1_MlbSocket,
     UCS_SYNC_MUTE_MODE_NO_MUTING,
     0 };
 Ucs_Xrm_ResObject_t *SnkOfRoute1_JobList[] = {
-    &SnkOfRoute1_MostSocket,
+    &SnkOfRoute1_NetworkSocket,
     &SnkOfRoute1_DcPort,
     &SnkOfRoute1_MlbSocket,
     &SnkOfRoute1_SyncCon,
     NULL };
 /* Route 2 from source-node=0x200 to sink-node=0x270 */
-Ucs_Xrm_MostSocket_t SnkOfRoute2_MostSocket = { 
+Ucs_Xrm_MostSocket_t SnkOfRoute2_NetworkSocket = { 
     UCS_XRM_RC_TYPE_MOST_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_INPUT,
@@ -118,19 +93,19 @@ Ucs_Xrm_StrmSocket_t SnkOfRoute2_StrmSocket = {
     UCS_STREAM_PORT_PIN_ID_SRXA0 };
 Ucs_Xrm_SyncCon_t SnkOfRoute2_SyncCon = { 
     UCS_XRM_RC_TYPE_SYNC_CON,
-    &SnkOfRoute2_MostSocket,
+    &SnkOfRoute2_NetworkSocket,
     &SnkOfRoute2_StrmSocket,
     UCS_SYNC_MUTE_MODE_NO_MUTING,
     0 };
 Ucs_Xrm_ResObject_t *SnkOfRoute2_JobList[] = {
-    &SnkOfRoute2_MostSocket,
+    &SnkOfRoute2_NetworkSocket,
     &SnkOfRoute2_StrmPort0,
     &SnkOfRoute2_StrmPort1,
     &SnkOfRoute2_StrmSocket,
     &SnkOfRoute2_SyncCon,
     NULL };
 /* Route 3 from source-node=0x200 to sink-node=0x240 */
-Ucs_Xrm_MostSocket_t SnkOfRoute3_MostSocket = { 
+Ucs_Xrm_MostSocket_t SnkOfRoute3_NetworkSocket = { 
     UCS_XRM_RC_TYPE_MOST_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_INPUT,
@@ -155,12 +130,12 @@ Ucs_Xrm_StrmSocket_t SnkOfRoute3_StrmSocket = {
     UCS_STREAM_PORT_PIN_ID_SRXA1 };
 Ucs_Xrm_SyncCon_t SnkOfRoute3_SyncCon = { 
     UCS_XRM_RC_TYPE_SYNC_CON,
-    &SnkOfRoute3_MostSocket,
+    &SnkOfRoute3_NetworkSocket,
     &SnkOfRoute3_StrmSocket,
     UCS_SYNC_MUTE_MODE_NO_MUTING,
     0 };
 Ucs_Xrm_ResObject_t *SnkOfRoute3_JobList[] = {
-    &SnkOfRoute3_MostSocket,
+    &SnkOfRoute3_NetworkSocket,
     &SnkOfRoute3_StrmPort0,
     &SnkOfRoute3_StrmPort1,
     &SnkOfRoute3_StrmSocket,
@@ -498,15 +473,15 @@ Ucs_Rm_Route_t AllRoutes[] = { {
         &SourceEndpointForRoute1,
         &SinkEndpointForRoute1,
         1,
-        0x8002
+        0x0010
     }, {
         &SourceEndpointForRoute1,
         &SinkEndpointForRoute2,
         1,
-        0x8003
+        0x0011
     }, {
         &SourceEndpointForRoute1,
         &SinkEndpointForRoute3,
         1,
-        0x8004
+        0x0012
     } };

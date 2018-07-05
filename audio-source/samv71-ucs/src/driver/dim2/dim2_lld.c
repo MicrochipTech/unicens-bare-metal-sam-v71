@@ -443,7 +443,7 @@ uint32_t DIM2LLD_GetQueueElementCount(DIM2LLD_ChannelType_t cType, DIM2LLD_Chann
 }
 
 uint16_t DIM2LLD_GetRxData(DIM2LLD_ChannelType_t cType, DIM2LLD_ChannelDirection_t dir, 
-                           uint8_t instance, uint32_t pos, uint8_t **pBuffer, uint16_t *pOffset, uint8_t *pPacketCounter)
+                           uint8_t instance, uint32_t pos, const uint8_t **pBuffer, uint16_t *pOffset, uint8_t *pPacketCounter)
 {
     ChannelContext_t *context;
     QueueEntry_t *entry;
