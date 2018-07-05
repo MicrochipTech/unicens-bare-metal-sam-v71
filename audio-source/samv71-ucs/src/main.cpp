@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------------------------*/
 /* UNICENS Daemon (unicensd) main-loop                                                            */
-/* Copyright 2017, Microchip Technology Inc. and its subsidiaries.                                */
+/* Copyright 2018, Microchip Technology Inc. and its subsidiaries.                                */
 /*                                                                                                */
 /* Redistribution and use in source and binary forms, with or without                             */
 /* modification, are permitted provided that the following conditions are met:                    */
@@ -38,6 +38,13 @@
 #include "task-audio.h"
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                          USER ADJUSTABLE                             */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+/* UNICENS daemon version number */
+#define UNICENSD_VERSION    ("V4.1.0")
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                      DEFINES AND LOCAL VARIABLES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
@@ -65,7 +72,7 @@ int main()
     Board_Init();
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
-    ConsolePrintf(PRIO_HIGH, BLUE "------|V71 UNICENS sample start (BUILD %s %s)|------" RESETCOLOR "\r\n", __DATE__, __TIME__);
+    ConsolePrintf(PRIO_HIGH, BLUE "------|V71 UNICENS sample start %s (BUILD %s %s)|------" RESETCOLOR "\r\n", UNICENSD_VERSION, __DATE__, __TIME__);
     if (!TaskUnicens_Init())
         ConsolePrintf(PRIO_ERROR, RED "Init of Task UNICENS Init Failed" RESETCOLOR "\r\n");
     if (!TaskAudio_Init())
