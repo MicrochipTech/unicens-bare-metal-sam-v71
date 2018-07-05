@@ -35,6 +35,7 @@
 #include "board_init.h"
 #include "Console.h"
 #include "task-unicens.h"
+#include "task-audio.h"
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                      DEFINES AND LOCAL VARIABLES                     */
@@ -61,15 +62,19 @@ static void GmacTransferCallback(uint32_t status, void *pTag);
 
 int main()
 {
-    BoardInit();
+    Board_Init();
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
     ConsolePrintf(PRIO_HIGH, BLUE "------|V71 UNICENS sample start (BUILD %s %s)|------" RESETCOLOR "\r\n", __DATE__, __TIME__);
-    TaskUnicens_Init();
+    if (!TaskUnicens_Init())
+        ConsolePrintf(PRIO_ERROR, RED "Init of Task UNICENS Init Failed" RESETCOLOR "\r\n");
+    if (!TaskAudio_Init())
+        ConsolePrintf(PRIO_ERROR, RED "Init of Task Audio Failed" RESETCOLOR "\r\n");
     while (1)
     {
         uint32_t now = GetTicks();
         TaskUnicens_Service();
+        TaskAudio_Service();
         if (m.consoleTrigger)
         {
             m.consoleTrigger = false;

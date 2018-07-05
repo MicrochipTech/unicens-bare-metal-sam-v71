@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------------------------*/
-/* UNICENS Daemon Task Implementation                                                             */
+/* Audio Processing Task Implementation                                                           */
 /* Copyright 2018, Microchip Technology Inc. and its subsidiaries.                                */
 /*                                                                                                */
 /* Redistribution and use in source and binary forms, with or without                             */
@@ -28,31 +28,72 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
 /*------------------------------------------------------------------------------------------------*/
 
-#ifndef TASK_UNICENS_H_
-#define TASK_UNICENS_H_
+#include <string.h>
+#include <assert.h>
+#include "Console.h"
+#include "dim2_lld.h"
+#include "task-audio.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+/* #define ENABLE_AUDIO_RX */
 
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                            Public API                                */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+struct TaskAudioVars
+{
+    bool initialized;
+    uint32_t audioPos;
+};
+static struct TaskAudioVars m = { 0 };
+static const uint8_t audioData[] =
+{
+    #include "beat_be.h"
+};
 
-/**
- * \brief Initializes the UNICENS Task
- * \note Must be called before any other function of this component
- * \return true, if initialization was successful. false, otherwise, do not call any other function in that case
- */
-bool TaskUnicens_Init(void);
 
-/**
- * \brief Gives the UNICENS Task time to maintain it's service routines
- */
-void TaskUnicens_Service(void);
+static bool ProcessStreamingData(const uint8_t *pRxBuf, uint32_t rxLen, uint8_t *pTxBuf, uint32_t txLen);
 
-#ifdef __cplusplus
+bool TaskAudio_Init(void)
+{
+    memset(&m, 0, sizeof(m));
+    m.initialized = true;
+    return true;
 }
-#endif
 
-#endif /* TASK_UNICENS_H_ */
+void TaskAudio_Service(void)
+{
+    while(true)
+    {
+        uint8_t *pTxBuf = NULL;
+        const uint8_t *pRxBuf = NULL;
+        uint16_t rxLen = 0;
+        uint16_t txLen = 0;
+#if ENABLE_AUDIO_RX
+        rxLen = DIM2LLD_GetRxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_RX, 0, 0, &pRxBuf, NULL, NULL);
+        if (0 == rxLen)
+            break;
+#endif
+        txLen = DIM2LLD_GetTxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_TX, 0, &pTxBuf);
+        if (0 == txLen)
+            break;
+        if (ProcessStreamingData(pRxBuf, rxLen, pTxBuf, txLen))
+        {
+#if ENABLE_AUDIO_RX
+            DIM2LLD_ReleaseRxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_RX, 0);
+#endif
+            DIM2LLD_SendTxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_TX, 0, txLen);
+        }
+        else break;
+    }
+}
+
+static bool ProcessStreamingData(const uint8_t *pRxBuf, uint32_t rxLen, uint8_t *pTxBuf, uint32_t txLen)
+{
+    uint32_t i;
+    if (!m.initialized)
+        return false;
+    for (i = 0; i < txLen; i++)
+    {
+        pTxBuf[i] = audioData[m.audioPos++];
+        if (sizeof(audioData) <= m.audioPos)
+            m.audioPos = 0;
+    }
+    return true;
+}

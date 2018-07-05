@@ -73,7 +73,6 @@ typedef struct
     uint32_t unicensTimeout;
     bool unicensTrigger;
     bool amsReceived;
-    uint32_t audioPos;
 } LocalVar_t;
 
 static LocalVar_t m;
@@ -111,17 +110,11 @@ static DIM2_Setup_t mlbConfig[] =
 };
 static const uint32_t mlbConfigSize = sizeof(mlbConfig) / sizeof(DIM2_Setup_t);
 
-static const uint8_t audioData[] =
-{
-    #include "beat_be.h"
-};
-
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                     PRIVTATE FUNCTION PROTOTYPES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 static void ServiceMostCntrlRx();
-static void ServiceMostSyncTx();
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                         PUBLIC FUNCTIONS                             */
@@ -166,7 +159,6 @@ void TaskUnicens_Service(void)
     if (!m.allowRun)
         return;
     ServiceMostCntrlRx();
-    ServiceMostSyncTx();
     now = GetTicks();
     /* UNICENS Service */
     if (m.unicensTrigger)
@@ -203,7 +195,7 @@ void TaskUnicens_Service(void)
 static void ServiceMostCntrlRx()
 {
     uint16_t bufLen;
-    uint8_t *pBuf;
+    const uint8_t *pBuf;
     DIM2LLD_Service();
     do
     {
@@ -232,24 +224,6 @@ static void ServiceMostCntrlRx()
         }
     }
     while (0 != bufLen);
-}
-
-static void ServiceMostSyncTx()
-{
-    while(true)
-    {
-        uint8_t *pBuf;
-        uint16_t maxLen = DIM2LLD_GetTxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_TX, 0, &pBuf);
-        if (0 == maxLen)
-        break;
-        for (uint16_t i = 0; i < maxLen; i++)
-        {
-            pBuf[i] = audioData[m.audioPos++];
-            if (sizeof(audioData) <= m.audioPos)
-            m.audioPos = 0;
-        }
-        DIM2LLD_SendTxData(DIM2LLD_ChannelType_Sync, DIM2LLD_ChannelDirection_TX, 0, maxLen);
-    }
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

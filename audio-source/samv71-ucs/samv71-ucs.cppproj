@@ -39,7 +39,7 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.samice</avrtool>
-    <avrtoolserialnumber>28015392</avrtoolserialnumber>
+    <avrtoolserialnumber>28018357</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0xA1220E00</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_samice>
       <ToolOptions>
@@ -49,7 +49,7 @@
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
-      <ToolNumber>28015392</ToolNumber>
+      <ToolNumber>28018357</ToolNumber>
       <ToolName>SAM-ICE</ToolName>
     </com_atmel_avrdbg_tool_samice>
     <avrtoolinterface>SWD</avrtoolinterface>
@@ -1285,6 +1285,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\task-audio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\task-audio.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\task-unicens.c">

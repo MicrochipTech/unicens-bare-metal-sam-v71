@@ -62,10 +62,31 @@ extern GMacb gGmacb; ///
 extern sXdmad xdma;
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                         Public typedefs                              */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+typedef enum
+{
+    BoardButton_SW0,
+    BoardButton_SW1
+} Board_Button_t;
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                         Public functions                             */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-void BoardInit(void);
+/**
+ * \brief Initializes the Board Support Component
+ * \note Must be called before any other function of this component
+ */
+void Board_Init(void);
+
+/**
+ * \brief Checks if the given button is pressed
+ * \param button - Enumeration specifying the button to check
+ * \return true, if the button is currently pressed. false, otherwise
+ */
+bool Board_IsButtonPressed(Board_Button_t button);
 
 #ifdef __cplusplus
 }

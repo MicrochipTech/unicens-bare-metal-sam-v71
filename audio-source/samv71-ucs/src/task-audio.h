@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------------------------*/
-/* UNICENS Daemon Task Implementation                                                             */
+/* Audio Processing Task Implementation                                                           */
 /* Copyright 2018, Microchip Technology Inc. and its subsidiaries.                                */
 /*                                                                                                */
 /* Redistribution and use in source and binary forms, with or without                             */
@@ -28,31 +28,34 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
 /*------------------------------------------------------------------------------------------------*/
 
-#ifndef TASK_UNICENS_H_
-#define TASK_UNICENS_H_
+#ifndef TASK_AUDIO_H_
+#define TASK_AUDIO_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
+#include <stdbool.h>
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                            Public API                                */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 /**
- * \brief Initializes the UNICENS Task
+ * \brief Initializes the Audio Task
  * \note Must be called before any other function of this component
  * \return true, if initialization was successful. false, otherwise, do not call any other function in that case
  */
-bool TaskUnicens_Init(void);
+bool TaskAudio_Init(void);
 
 /**
- * \brief Gives the UNICENS Task time to maintain it's service routines
+ * \brief Gives the Audio Task time to maintain it's service routines
  */
-void TaskUnicens_Service(void);
+void TaskAudio_Service(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* TASK_UNICENS_H_ */
+#endif /* TASK_AUDIO_H_ */
