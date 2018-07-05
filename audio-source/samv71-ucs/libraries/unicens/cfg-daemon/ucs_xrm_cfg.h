@@ -53,7 +53,7 @@ extern "C"
  * associated with the jobs that are executed by the Extended Resource Manager. 
  * Valid range: 1..254.  Default value: 8.
  */
-#define UCS_XRM_NUM_RESOURCES        20
+#define UCS_XRM_NUM_RESOURCES        60
 
 #ifdef __cplusplus
 }   /* extern "C" */
