@@ -756,6 +756,7 @@ static void OnUnicensRoutingResult(Ucs_Rm_Route_t* route_ptr, Ucs_Rm_RouteInfos_
         }
     }
     conLabel = Ucs_Rm_GetConnectionLabel(my->unicens, route_ptr);
+    UCSIPrint_SetConnectionLabel(route_ptr->route_id, conLabel);
     UCSI_CB_OnRouteResult(my->tag, route_ptr->route_id, UCS_RM_ROUTE_INFOS_BUILT == route_infos, conLabel);
 }
 

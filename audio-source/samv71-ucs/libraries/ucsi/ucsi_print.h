@@ -33,7 +33,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
+
 #include <stdint.h>
 #include <stdarg.h>
 #include "ucs_api.h"
@@ -42,7 +42,7 @@ extern "C" {
 
 #define UCSI_PRINT_MAX_NODES (UCS_NUM_REMOTE_DEVICES + 1)
 #define UCSI_PRINT_MAX_RESOURCES (UCS_XRM_NUM_RESOURCES)
-    
+
 typedef enum
 {
     ObjState_Unused,
@@ -53,6 +53,7 @@ typedef enum
 void UCSIPrint_Init(Ucs_Rm_Route_t *pRoutes, uint16_t routesSize, void *tag);
 void UCSIPrint_ShowTable(void);
 void UCSIPrint_SetNodeAvailable(uint16_t nodeAddress, bool isAvailable);
+void UCSIPrint_SetConnectionLabel(uint16_t routeId, uint16_t connectionLabel);
 void UCSIPrint_SetObjectState(Ucs_Xrm_ResObject_t *element, UCSIPrint_ObjectState_t state);
 
 /**
@@ -65,5 +66,5 @@ extern void UCSIPrint_CB_OnUserMessage(void *tag, const char pMsg[]);
 #ifdef __cplusplus
 }
 #endif
-    
+
 #endif
