@@ -30,6 +30,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "ucsi_api.h"
+#include "ucsi_print.h"
 /************************************************************************/
 /* Private Definitions and variables                                    */
 /************************************************************************/
@@ -80,7 +81,7 @@ static void OnUcsGpioTriggerEventStatus(uint16_t node_address, uint16_t gpio_por
     uint16_t rising_edges, uint16_t falling_edges, uint16_t levels, void * user_ptr);
 static void OnUcsI2CWrite(uint16_t node_address, uint16_t i2c_port_handle,
     uint8_t i2c_slave_address, uint8_t data_len, Ucs_I2c_Result_t result, void *user_ptr);
-static void OnUcsI2CRead(uint16_t node_address, uint16_t i2c_port_handle, 
+static void OnUcsI2CRead(uint16_t node_address, uint16_t i2c_port_handle,
             uint8_t i2c_slave_address, uint8_t data_len, uint8_t data_ptr[], Ucs_I2c_Result_t result, void *user_ptr);
 static void OnUcsAmsWrite(Ucs_AmsTx_Msg_t* msg_ptr, Ucs_AmsTx_Result_t result, Ucs_AmsTx_Info_t info, void *user_ptr);
 
@@ -164,7 +165,14 @@ bool UCSI_NewConfig(UCSI_Data_t *my,
     e->val.Init.init_ptr = &my->uniInitData;
     RB_PopWritePtr(&my->rb);
     UCSI_CB_OnServiceRequired(my->tag);
+    UCSIPrint_Init(pRoutesList, routesListSize, my);
     return true;
+}
+
+void UCSI_PrintRouteTable(UCSI_Data_t *pPriv)
+{
+    pPriv = pPriv;
+    UCSIPrint_ShowTable();
 }
 
 bool UCSI_ExecuteScript(UCSI_Data_t *my, uint16_t targetAddress, Ucs_Ns_Script_t *pScriptList, uint8_t scriptListLength)
@@ -282,9 +290,9 @@ void UCSI_Service(UCSI_Data_t *my)
                 UCSI_CB_OnUserMessage(my->tag, true, "Ucs_Gpio_WritePort failed", 0);
                 UCSI_CB_OnCommandResult(my->tag, UnicensCmd_GpioWritePort, false, e->val.GpioWritePort.destination);
             }
-            break;            
+            break;
         case UnicensCmd_I2CWrite:
-            if (UCS_RET_SUCCESS == Ucs_I2c_WritePort(my->unicens, e->val.I2CWrite.destination, 0x0F00, 
+            if (UCS_RET_SUCCESS == Ucs_I2c_WritePort(my->unicens, e->val.I2CWrite.destination, 0x0F00,
                 (e->val.I2CWrite.isBurst ? UCS_I2C_BURST_MODE : UCS_I2C_DEFAULT_MODE), e->val.I2CWrite.blockCount,
                 e->val.I2CWrite.slaveAddr, e->val.I2CWrite.timeout, e->val.I2CWrite.dataLen, e->val.I2CWrite.data, OnUcsI2CWrite))
                 popEntry = false;
@@ -295,7 +303,7 @@ void UCSI_Service(UCSI_Data_t *my)
             }
             break;
         case UnicensCmd_I2CRead:
-            if (UCS_RET_SUCCESS == Ucs_I2c_ReadPort(my->unicens, e->val.I2CRead.destination, 0x0F00, 
+            if (UCS_RET_SUCCESS == Ucs_I2c_ReadPort(my->unicens, e->val.I2CRead.destination, 0x0F00,
                 e->val.I2CRead.slaveAddr, e->val.I2CRead.dataLen, e->val.I2CRead.timeout, OnUcsI2CRead))
                 popEntry = false;
             else
@@ -704,7 +712,7 @@ static void OnUnicensRoutingResult(Ucs_Rm_Route_t* route_ptr, Ucs_Rm_RouteInfos_
     uint16_t conLabel;
     UCSI_Data_t *my = (UCSI_Data_t *)user_ptr;
     assert(MAGIC == my->magic);
-    if (NULL == route_ptr || NULL == route_ptr->source_endpoint_ptr || 
+    if (NULL == route_ptr || NULL == route_ptr->source_endpoint_ptr ||
         NULL == route_ptr->source_endpoint_ptr->node_obj_ptr ||
         NULL == route_ptr->sink_endpoint_ptr ||
         NULL == route_ptr->sink_endpoint_ptr->node_obj_ptr)
@@ -785,15 +793,22 @@ static void OnUnicensDebugXrmResources(Ucs_Xrm_ResourceType_t resource_type,
     {
         case UCS_XRM_INFOS_BUILT:
         msg = (char *)"has been built";
+        UCSIPrint_SetObjectState(resource_ptr, ObjState_Build);
         break;
         case UCS_XRM_INFOS_DESTROYED:
         msg = (char *)"has been destroyed";
+        UCSIPrint_SetObjectState(resource_ptr, ObjState_Unused);
         break;
         case UCS_XRM_INFOS_ERR_BUILT:
         msg = (char *)"cannot be built";
+        UCSIPrint_SetObjectState(resource_ptr, ObjState_Failed);
+        break;
+    case UCS_XRM_INFOS_ERR_DESTROYED:
+        msg = (char *)"cannot be destroyed";
+        UCSIPrint_SetObjectState(resource_ptr, ObjState_Failed);
         break;
         default:
-        msg = (char *)"cannot be destroyed";
+        msg = (char *)"has unknown state";
         break;
     }
     switch(resource_type)
@@ -941,6 +956,7 @@ static void OnUcsMgrReport(Ucs_MgrReport_t code, uint16_t node_address, Ucs_Rm_N
     uint32_t i;
     UCSI_Data_t *my = (UCSI_Data_t *)user_ptr;
     assert(MAGIC == my->magic);
+    UCSIPrint_SetNodeAvailable(node_address, UCS_MGR_REP_AVAILABLE == code);
     switch (code)
     {
     case UCS_MGR_REP_IGNORED_UNKNOWN:
@@ -1031,7 +1047,7 @@ static void OnUcsI2CWrite(uint16_t node_address, uint16_t i2c_port_handle,
         UCSI_CB_OnUserMessage(my->tag, true, "Remote I2C Write to node=0x%X failed", 1, node_address);
 }
 
-static void OnUcsI2CRead(uint16_t node_address, uint16_t i2c_port_handle, 
+static void OnUcsI2CRead(uint16_t node_address, uint16_t i2c_port_handle,
             uint8_t i2c_slave_address, uint8_t data_len, uint8_t data_ptr[], Ucs_I2c_Result_t result, void *user_ptr)
 {
     UCSI_Data_t *my = (UCSI_Data_t *)user_ptr;
@@ -1047,6 +1063,22 @@ static void OnUcsAmsWrite(Ucs_AmsTx_Msg_t* msg_ptr, Ucs_AmsTx_Result_t result, U
     OnCommandExecuted(my, UnicensCmd_SendAmsMessage, (UCS_AMSTX_RES_SUCCESS == result));
     if (UCS_AMSTX_RES_SUCCESS != result)
         UCSI_CB_OnUserMessage(my->tag, true, "SendAms failed with result=0x%x, info=0x%X", 2, result, info);
+}
+
+/************************************************************************/
+/* Callback from UCSI Print component:                                  */
+/************************************************************************/
+
+void UCSIPrint_CB_OnUserMessage(void *usr, const char pMsg[])
+{
+    void *tag = NULL;
+    UCSI_Data_t *my = (UCSI_Data_t *)usr;
+    if (my)
+    {
+        assert(MAGIC == my->magic);
+        tag = my->tag;
+    }
+    UCSI_CB_OnPrintRouteTable(tag, pMsg);
 }
 
 /************************************************************************/

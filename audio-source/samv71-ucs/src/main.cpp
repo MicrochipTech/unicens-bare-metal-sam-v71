@@ -42,7 +42,7 @@
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 /* UNICENS daemon version number */
-#define UNICENSD_VERSION    ("V4.1.0")
+#define UNICENSD_VERSION    ("V4.2.0")
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                      DEFINES AND LOCAL VARIABLES                     */
@@ -72,6 +72,7 @@ int main()
     Board_Init();
     memset(&m, 0, sizeof(LocalVar_t));
     ConsoleInit();
+    ConsoleSetPrio(PRIO_HIGH);
     ConsolePrintf(PRIO_HIGH, BLUE "------|V71 UNICENS sample start %s (BUILD %s %s)|------" RESETCOLOR "\r\n", UNICENSD_VERSION, __DATE__, __TIME__);
     if (!TaskUnicens_Init())
         ConsolePrintf(PRIO_ERROR, RED "Init of Task UNICENS Init Failed" RESETCOLOR "\r\n");
