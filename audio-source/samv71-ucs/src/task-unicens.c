@@ -43,15 +43,10 @@
 #include "task-unicens.h"
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                          USER ADJUSTABLE                             */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-
-/* Debug feature */
-/*#define LLD_TRACE*/
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                      DEFINES AND LOCAL VARIABLES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+#define DEBUG_TABLE_PRINT_TIME_MS  (250)
 
 typedef struct
 {
@@ -68,6 +63,8 @@ typedef struct
 typedef struct
 {
     bool allowRun;
+    bool lldTrace;
+    bool noRouteTable;
     UCSI_Data_t unicens;
     bool unicensRunning;
     uint32_t unicensTimeout;
@@ -114,7 +111,7 @@ static const uint32_t mlbConfigSize = sizeof(mlbConfig) / sizeof(DIM2_Setup_t);
 /*                     PRIVTATE FUNCTION PROTOTYPES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-static void ServiceMostCntrlRx();
+static void ServiceMostCntrlRx(void);
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                         PUBLIC FUNCTIONS                             */
@@ -187,12 +184,11 @@ void TaskUnicens_Service(void)
     }
 }
 
-
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                  PRIVATE FUNCTION IMPLEMENTATIONS                    */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-static void ServiceMostCntrlRx()
+static void ServiceMostCntrlRx(void)
 {
     uint16_t bufLen;
     const uint8_t *pBuf;
@@ -204,14 +200,15 @@ static void ServiceMostCntrlRx()
         {
             if (m.unicensRunning)
             {
-                #ifdef LLD_TRACE
-                ConsolePrintf( PRIO_HIGH, BLUE "%08lu MSG_RX(%d): ", GetTicks(), bufLen);
-                for ( int16_t i = 0; i < bufLen; i++ )
+                if (m.lldTrace)
                 {
-                    ConsolePrintf( PRIO_HIGH, "%02X ", pBuf[i] );
+                    ConsolePrintf( PRIO_HIGH, BLUE "%08lu MSG_RX(%d): ", GetTicks(), bufLen);
+                    for ( int16_t i = 0; i < bufLen; i++ )
+                    {
+                        ConsolePrintf( PRIO_HIGH, "%02X ", pBuf[i] );
+                    }
+                    ConsolePrintf( PRIO_HIGH, RESETCOLOR"\n");
                 }
-                ConsolePrintf( PRIO_HIGH, RESETCOLOR"\n");
-                #endif
                 if (!UCSI_ProcessRxData(&m.unicens, pBuf, bufLen))
                 {
                     ConsolePrintf(PRIO_ERROR, "RX buffer overflow\r\n");
@@ -225,6 +222,7 @@ static void ServiceMostCntrlRx()
     }
     while (0 != bufLen);
 }
+
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                  CALLBACK FUNCTIONS FROM UNICENS                     */
@@ -244,16 +242,16 @@ uint16_t UCSI_CB_OnGetTime(void *pTag)
 void UCSI_CB_OnSetServiceTimer(void *pTag, uint16_t timeout)
 {
     if (0 == timeout)
-    m.unicensTimeout = 0;
+        m.unicensTimeout = 0;
     else
-    m.unicensTimeout = GetTicks() + timeout;
+        m.unicensTimeout = GetTicks() + timeout;
 }
 
 void UCSI_CB_OnNetworkState(void *pTag, bool isAvailable, uint16_t packetBandwidth, uint8_t amountOfNodes)
 {
     pTag = pTag;
     ConsolePrintf(PRIO_HIGH, YELLOW "Network isAvailable=%s, packetBW=%d, nodeCount=%d" RESETCOLOR "\r\n",
-    isAvailable ? "yes" : "no", packetBandwidth, amountOfNodes);
+        isAvailable ? "yes" : "no", packetBandwidth, amountOfNodes);
 }
 
 void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16_t vargsCnt, ...)
@@ -265,9 +263,14 @@ void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16
     vsnprintf(outbuf, sizeof(outbuf), format, argptr);
     va_end(argptr);
     if (isError)
-    ConsolePrintf(PRIO_ERROR, RED "%s" RESETCOLOR "\r\n", outbuf);
+        ConsolePrintf(PRIO_ERROR, RED "%s" RESETCOLOR "\r\n", outbuf);
     else
-    ConsolePrintf(PRIO_HIGH, "%s\r\n", outbuf);
+    ConsolePrintf(PRIO_LOW, "%s\r\n", outbuf);
+}
+
+void UCSI_CB_OnPrintRouteTable(void *pTag, const char pString[])
+{
+    ConsolePrintf(PRIO_HIGH, "%s\r\n", pString);
 }
 
 void UCSI_CB_OnServiceRequired(void *pTag)
@@ -281,7 +284,7 @@ const uint8_t *pPayload, uint32_t payloadLen)
     pTag = pTag;
     assert(pTag == &m);
     uint8_t *pBuf = NULL;
-    #ifdef LLD_TRACE
+    if (m.lldTrace)
     {
         ConsolePrintf( PRIO_HIGH, BLUE "%08lu MSG_TX(%lu): ", GetTicks(), payloadLen);
         for ( uint32_t i = 0; i < payloadLen; i++ )
@@ -290,7 +293,6 @@ const uint8_t *pPayload, uint32_t payloadLen)
         }
         ConsolePrintf(PRIO_HIGH, RESETCOLOR "\n");
     }
-    #endif
     uint32_t txMaxLen = 0;
     while (0 == txMaxLen)
     {
@@ -323,8 +325,8 @@ void UCSI_CB_OnAmsMessageReceived(void *pTag)
 
 void UCSI_CB_OnRouteResult(void *pTag, uint16_t routeId, bool isActive, uint16_t connectionLabel)
 {
-    ConsolePrintf(PRIO_HIGH, "Route id=0x%X isActive=%s ConLabel=0x%X\r\n", routeId,
-    (isActive ? "true" : "false"), connectionLabel);
+    ConsolePrintf(PRIO_MEDIUM, "Route id=0x%X isActive=%s ConLabel=0x%X\r\n", routeId,
+        (isActive ? "true" : "false"), connectionLabel);
 }
 
 void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPinId, bool isHighState)

@@ -810,6 +810,12 @@
     <Compile Include="libraries\ucsi\ucsi_impl.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\ucsi\ucsi_print.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\ucsi\ucsi_print.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\unicens\cfg-daemon\ucs_cfg.h">
       <SubType>compile</SubType>
     </Compile>
