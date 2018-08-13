@@ -68,7 +68,6 @@ typedef struct
     UCSI_Data_t unicens;
     bool unicensRunning;
     uint32_t unicensTimeout;
-    uint32_t debugTimeout;
     bool unicensTrigger;
     bool amsReceived;
 } LocalVar_t;
@@ -113,7 +112,6 @@ static const uint32_t mlbConfigSize = sizeof(mlbConfig) / sizeof(DIM2_Setup_t);
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 static void ServiceMostCntrlRx(void);
-static void DbgSetTimer(bool enforce);
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                         PUBLIC FUNCTIONS                             */
@@ -148,7 +146,6 @@ bool TaskUnicens_Init(void)
         assert(false);
         return false;
     }
-    DbgSetTimer(true);
     m.allowRun = true;
     return true;
 }
@@ -171,11 +168,6 @@ void TaskUnicens_Service(void)
         m.unicensTimeout = 0;
         UCSI_Timeout(&m.unicens);
     }
-    if (0 != m.debugTimeout && now >= m.debugTimeout)
-    {
-        m.debugTimeout = 0;
-        UCSI_PrintRouteTable(&m.unicens);
-    }
     if (m.amsReceived)
     {
         uint16_t amsId = 0xFFFF;
@@ -189,16 +181,6 @@ void TaskUnicens_Service(void)
             UCSI_ReleaseAmsMessage(&m.unicens);
         }
         else assert(false);
-    }
-}
-
-static void DbgSetTimer(bool enforce)
-{
-    if (m.noRouteTable)
-        return;
-    if (enforce || 0 != m.debugTimeout)
-    {
-        m.debugTimeout = GetTicks() + DEBUG_TABLE_PRINT_TIME_MS;
     }
 }
 
@@ -248,7 +230,6 @@ static void ServiceMostCntrlRx(void)
 
 void UCSI_CB_OnCommandResult(void *pTag, UnicensCmd_t command, bool success, uint16_t nodeAddress)
 {
-    DbgSetTimer(false);
     if (!success)
         ConsolePrintf(PRIO_ERROR, RED "OnCommandResult, cmd=0x%X, node=0x%X failed" RESETCOLOR "\r\n", command, nodeAddress);
 }
@@ -269,7 +250,6 @@ void UCSI_CB_OnSetServiceTimer(void *pTag, uint16_t timeout)
 void UCSI_CB_OnNetworkState(void *pTag, bool isAvailable, uint16_t packetBandwidth, uint8_t amountOfNodes)
 {
     pTag = pTag;
-    DbgSetTimer(true);
     ConsolePrintf(PRIO_HIGH, YELLOW "Network isAvailable=%s, packetBW=%d, nodeCount=%d" RESETCOLOR "\r\n",
         isAvailable ? "yes" : "no", packetBandwidth, amountOfNodes);
 }
@@ -279,7 +259,6 @@ void UCSI_CB_OnUserMessage(void *pTag, bool isError, const char format[], uint16
     va_list argptr;
     char outbuf[300];
     pTag = pTag;
-    DbgSetTimer(false);
     va_start(argptr, vargsCnt);
     vsnprintf(outbuf, sizeof(outbuf), format, argptr);
     va_end(argptr);
@@ -346,7 +325,6 @@ void UCSI_CB_OnAmsMessageReceived(void *pTag)
 
 void UCSI_CB_OnRouteResult(void *pTag, uint16_t routeId, bool isActive, uint16_t connectionLabel)
 {
-    DbgSetTimer(true);
     ConsolePrintf(PRIO_MEDIUM, "Route id=0x%X isActive=%s ConLabel=0x%X\r\n", routeId,
         (isActive ? "true" : "false"), connectionLabel);
 }
