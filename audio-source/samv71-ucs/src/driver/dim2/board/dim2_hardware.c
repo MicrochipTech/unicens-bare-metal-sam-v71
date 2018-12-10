@@ -25,6 +25,7 @@
 #include "samv71.h"
 #include "board.h"
 #include "dim2_hardware.h"
+#include "Console.h"
 
 void enable_mlb_clock(void)
 {
@@ -44,7 +45,7 @@ void initialize_mlb_pins(void)
 #define PIN_MLBCLK  {PIO_PB4, PIOB, ID_PIOB, PIO_PERIPH_C, PIO_DEFAULT}
 #define PIN_MLBDAT  {PIO_PB5, PIOB, ID_PIOB, PIO_PERIPH_C, PIO_DEFAULT}
 #define PIN_MLBSIG  {PIO_PD10, PIOD, ID_PIOD, PIO_PERIPH_D, PIO_DEFAULT}
-    
+
     static const Pin pinsMlb[] = {PIN_MLBCLK, PIN_MLBDAT, PIN_MLBSIG};
     PIO_Configure(pinsMlb, 3);
 
@@ -78,8 +79,7 @@ void dimcb_io_write(uint32_t  *ptr32, uint32_t value)
 
 void dimcb_on_error(uint8_t error_id, const char *error_message)
 {
-    printf("dim2-hal error:%d, '%s'\r\n",
-                  error_id, error_message);
+    ConsolePrintf(PRIO_ERROR, RED "dim2-hal error:%d, '%s'" RESETCOLOR"\r\n", error_id, error_message);
 }
 
 void mlb_int_handler(void)

@@ -84,7 +84,15 @@ typedef enum
     UnicensCmd_GpioWritePort,
     UnicensCmd_I2CWrite,
     UnicensCmd_I2CRead,
-    UnicensCmd_SendAmsMessage
+    UnicensCmd_SendAmsMessage,
+    UnicensCmd_NDStart,
+    UnicensCmd_NDStop,
+    UnicensCmd_NwStartup,
+    UnicensCmd_NwShutdown,
+    UnicensCmd_ProgIsRam,
+    UnicensCmd_ProgIsRom,
+    UnicensCmd_ProgInitAll,
+    UnicensCmd_PacketFilterMode
 } UnicensCmd_t;
 
 /**
@@ -109,7 +117,9 @@ typedef struct
  */
 typedef struct
 {
-    Ucs_Rm_Node_t * node_ptr;
+    uint16_t nodeAddress;
+    Ucs_Ns_Script_t *scriptPtr;
+    uint8_t scriptSize;
 } UnicensCmdNsRun_t;
 
 /**
@@ -172,6 +182,35 @@ typedef struct
  */
 typedef struct
 {
+    Ucs_Signature_t signature;
+    Ucs_IdentString_t ident_string;
+} UnicensCmdProgIsRam_t;
+
+/**
+ * \brief Internal struct for UNICENS Integration
+ * \note: currently identical to UnicensCmdProgIsRam_t, but maybe different in future
+ */
+typedef struct
+{
+    Ucs_Signature_t signature;
+    Ucs_IdentString_t ident_string;
+} UnicensCmdProgIsRom_t;
+
+/**
+ * \brief Internal struct for UNICENS Integration
+ * \note: currently identical to UnicensCmdProgIsRam_t, but maybe different in future
+ */
+typedef struct
+{
+    uint16_t destination_address;
+    uint16_t mode;
+} UnicensCmdPacketFilterMode_t;
+
+/**
+ * \brief Internal struct for UNICENS Integration
+ */
+typedef struct
+{
     UnicensCmd_t cmd;
     union
     {
@@ -182,6 +221,9 @@ typedef struct
         UnicensCmdGpioWritePort_t GpioWritePort;
         UnicensCmdI2CWrite_t I2CWrite;
         UnicensCmdI2CRead_t I2CRead;
+        UnicensCmdProgIsRam_t ProgIsRam;
+        UnicensCmdProgIsRom_t ProgIsRom;
+        UnicensCmdPacketFilterMode_t PacketFilterMode;
 #if (ENABLE_AMS_LIB)
         UnicensCmdSendAmsMessage_t SendAms;
 #endif
@@ -202,12 +244,6 @@ typedef struct {
     volatile uint32_t txPos;
 } RB_t;
 
-typedef struct
-{
-    bool valid;
-    uint16_t nodeAddress;
-} NodeAvailable_t;
-
 /**
  * \brief Internal variables for one instance of UNICENS Integration
  * \note Allocate this structure for each instance (static or malloc)
@@ -219,6 +255,10 @@ typedef struct
     uint32_t magic;
     void *tag;
     bool initialized;
+    bool ndRunning;
+    bool programmingMode;
+    bool programmingJobsTotal;
+    bool programmingJobsFinished;
     Ucs_Rm_Route_t *pendingRoutePtr;
     RB_t rb;
     uint8_t rbBuf[(CMD_QUEUE_LEN * sizeof(UnicensCmdEntry_t))];
@@ -228,7 +268,6 @@ typedef struct
     Ucs_Lld_Api_t *uniLld;
     void *uniLldHPtr;
     UnicensCmdEntry_t *currentCmd;
-    NodeAvailable_t nodeAvailable[MAX_NODES];
     bool printTrigger;
 } UCSI_Data_t;
 

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------------------------*/
-/* UNICENS Daemon Task Implementation                                                             */
-/* Copyright 2018, Microchip Technology Inc. and its subsidiaries.                                */
+/* UNICENS Node and MAC Address Collision Solver Component                                        */
+/* Copyright 2017, Microchip Technology Inc. and its subsidiaries.                                */
 /*                                                                                                */
 /* Redistribution and use in source and binary forms, with or without                             */
 /* modification, are permitted provided that the following conditions are met:                    */
@@ -27,55 +27,87 @@
 /* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE                  */
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
 /*------------------------------------------------------------------------------------------------*/
+#ifndef UCSI_COLLISION_H_
+#define UCSI_COLLISION_H_
 
-#ifndef TASK_UNICENS_H_
-#define TASK_UNICENS_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <string.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "ucs_api.h"
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                            Public API                                */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 /**
- * \brief Initializes the UNICENS Task
- * \note Must be called before any other function of this component
- * \return true, if initialization was successful. false, otherwise, do not call any other function in that case
+ * \brief Initializes the collision resolver module
+ * \note Do not use any other function, before calling this method.
+ *
+ * \param pPriv - private data section of this instance
  */
-bool TaskUnicens_Init(void);
+void UCSICollision_Init(void);
 
 /**
- * \brief Gives the UNICENS Task time to maintain it's service routines
+ * \brief Sets any pointer as parameter of the callback function UCSICollision_CB_OnProgramIdentString.
+ *
+ * \param userPtr - Any pointer allowed
  */
-void TaskUnicens_Service(void);
+void UCSICollision_SetUserPtr(void *userPtr);
 
 /**
- * \brief Enables or disables a route by the given routeId
+ * \brief Sets the expected amount of network nodes in the ring (MPR). 
+ *        Programming will only take place, if expected node count is like the found node count.
+ * \note This value is given by the user
+ * \note Values over 64 will be silently ignored
  *
- * \param routeId - identifier as given in XML file along with MOST socket (unique)
- * \param isActive - true, route will become active. false, route will be deallocated
- *
- * \return true, if route was found and the specific command was enqueued to UNICENS.
+ * \param nodeCount - private data section of this instance
  */
-bool TaskUnicens_SetRouteActive(uint16_t routeId, bool isActive);
+void UCSICollision_SetExpectedNodeCount(uint8_t nodeCount);
+
+/**
+ * \brief Sets the found amount of network nodes in the ring (MPR). 
+ *        Programming will only take place, if expected node count is like the found node count.
+ * \note This value is given by the network
+ * \note Values over 64 will be silently ignored
+ *
+ * \param nodeCount - private data section of this instance
+ */
+void UCSICollision_SetFoundNodeCount(uint8_t nodeCount);
+
+/**
+ * \brief Stores a found network node (by the UNICENS manager) into a lookup table.
+ *
+ * \param signature - The signature of the node (containing at least valid node address and MAC address)
+ * \param collisionDetected - true, if UNICENS manager detected state which is not normal. false, node is valid
+ */
+void UCSICollision_StoreSignature(const Ucs_Signature_t *signature, bool collisionDetected);
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                        CALLBACK SECTION                              */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 /**
- * \brief Callback when a route become active / inactive.
- * \note This function must be implemented by the integrator
- * \param routeId - identifier as given in XML file along with MOST socket (unique)
- * \param isActive - true, if the route is now in use. false, the route is not established.
- * \param connectionLabel - The connection label used on the Network. Only valid, if isActive=true
+ * \brief Callback when the implementer needs to program the INIC
+ *
+ * \param signature - The signature of the node to be programmed
+ * \param newIdentString - The data to be programmed
+ * \param userPtr - The pointer given by UCSICollision_SetUserPtr function, otherwise NULL.
  */
-extern void TaskUnicens_CB_OnRouteResult(uint16_t routeId, bool isActive, uint16_t connectionLabel);
+extern void UCSICollision_CB_OnProgramIdentString(const Ucs_Signature_t *signature, 
+    const Ucs_IdentString_t *newIdentString, void *userPtr);
 
-#ifdef __cplusplus
-}
-#endif
+/**
+ * \brief Callback when the implementer needs to do final cleanup after flashing
+ *
+ * \param userPtr - The pointer given by UCSICollision_SetUserPtr function, otherwise NULL.
+ */
+extern void UCSICollision_CB_OnProgramDone(void *userPtr);
 
-#endif /* TASK_UNICENS_H_ */
+/**
+ * \brief Callback to inform the implementer that there was no flashing required. The collision resolving finished without any changes.
+ *
+ * \param userPtr - The pointer given by UCSICollision_SetUserPtr function, otherwise NULL.
+ */
+extern void UCSICollision_CB_FinishedWithoutChanges(void *userPtr);
+
+#endif /* UCSI_COLLISION_H_ */

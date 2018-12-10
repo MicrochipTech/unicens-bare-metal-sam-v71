@@ -52,6 +52,19 @@ extern "C" {
 void UCSI_Init(UCSI_Data_t *pPriv, void *pTag);
 
 /**
+ * \brief Runs in programming mode. All nodes will be treated as unknown. 
+ *        If the node address of a node is not correct, it will be new programmed.
+ * \note This is a special mode. All public functions of this component will not be 
+ *       accepted if this mode is set.
+ *       Except: UCSI_ProcessRxData, UCSI_Service, UCSI_Timeout, UCSI_ProgramIdentStringRam, UCSI_ProgramIdentStringRom.
+ * \note Call UCSI_Init again, to leave this mode.
+ *
+ * \param pPriv - private data section of this instance
+ * \param amountOfNodes - Programming starts only if the found node count in the network is like the given value.
+ */
+bool UCSI_RunInProgrammingMode(UCSI_Data_t *pPriv, uint8_t amountOfNodes);
+
+/**
  * \brief Executes the given configuration. If already started, all
  *        existing local and remote INIC resources will be destroyed
  * \note All given pointers must stay valid until this callback is
@@ -222,6 +235,39 @@ bool UCSI_I2CRead(UCSI_Data_t *pPriv, uint16_t targetAddress,
  */
 bool UCSI_SetGpioState(UCSI_Data_t *pPriv, uint16_t targetAddress, uint8_t gpioPinId, bool isHighState);
 
+/**
+ * \brief Programs the IdentString into the specified INICs RAM
+ *
+ * \param pPriv - private data section of this instance
+ * \param signature - The signature of the node to be programmed
+ * \param newIdentString - newIdentString - The data to be programmed
+ *
+ * \return true, if program to RAM command was enqueued to UNICENS.
+ */
+bool UCSI_ProgramIdentStringRam(UCSI_Data_t *pPriv, const Ucs_Signature_t *signature, const Ucs_IdentString_t *newIdentString);
+
+/**
+ * \brief Programs the IdentString into the specified INICs RAM
+ *
+ * \param pPriv - private data section of this instance
+ * \param signature - The signature of the node to be programmed
+ * \param newIdentString - newIdentString - The data to be programmed
+ *
+ * \return true, if program to RAM command was enqueued to UNICENS.
+ */
+bool UCSI_ProgramIdentStringRom(UCSI_Data_t *pPriv, const Ucs_Signature_t *signature, const Ucs_IdentString_t *newIdentString);
+
+/**
+ * \brief Enables Promiscuous Mode on the given Node.
+ *
+ * \param pPriv - private data section of this instance
+ * \param targetAddress - targetAddress - The node / group target address
+ * \param enablePromiscuous - true, perfect match filter will be disabled. false, otherwise.
+ *
+ * \return true, if command was enqueued to UNICENS.
+ */
+bool UCSI_EnablePromiscuousMode(UCSI_Data_t *pPriv, uint16_t targetAddress, bool enablePromiscuous);
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                        CALLBACK SECTION                              */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -294,6 +340,13 @@ extern void UCSI_CB_OnPrintRouteTable(void *pTag, const char pString[]);
 extern void UCSI_CB_OnServiceRequired(void *pTag);
 
 /**
+ * \brief Callback when ever the INIC should be reseted by the integration code
+  * \note This function must be implemented by the integrator
+ * \param pTag - Pointer given by the integrator by UCSI_Init
+ */
+extern void UCSI_CB_OnResetInic(void *pTag);
+
+/**
  * \brief Callback when ever this instance of UNICENS wants to send control data to the LLD.
  * \note This function must be implemented by the integrator
  * \param pTag - Pointer given by the integrator by UCSI_Init
@@ -348,6 +401,24 @@ extern void UCSI_CB_OnRouteResult(void *pTag, uint16_t routeId, bool isActive, u
  * \param isHighState - true, high state = 3,3V. false, low state = 0V.
  */
 extern void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPinId, bool isHighState);
+
+/**
+ * \brief Callback when nodes are discovered or disappear
+ * \note This function must be implemented by the integrator
+ * \param pTag - Pointer given by the integrator by UCSI_Init
+ * \param code - Report code
+ * \param signature - Signature of the found device. Maybe NULL in error cases
+ * \param pNode - Reference to the node structure found in nodes list. Maybe NULL.
+ */
+extern void UCSI_CB_OnMgrReport(void *pTag, Ucs_MgrReport_t code, Ucs_Signature_t *signature, Ucs_Rm_Node_t *pNode);
+
+/**
+ * \brief Callback when programming (collision resolving) is finished
+ * \note This function must be implemented by the integrator
+ * \param pTag - Pointer given by the integrator by UCSI_Init
+ * \param changed - true, if at least one node was programmed with new configuration. false, nothing was changed.
+ */
+extern void UCSI_CB_OnProgrammingDone(void *pTag, bool changed);
 
 /**
  * \brief Callback when an I2C Read (triggered by UCSI_I2CRead) command has been executed
