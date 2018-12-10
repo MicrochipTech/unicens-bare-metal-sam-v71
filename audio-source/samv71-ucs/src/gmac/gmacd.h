@@ -132,7 +132,7 @@ typedef void (*fGmacdTsuCallback)(void);
  */
 typedef struct _GmacSG {
 	uint32_t size;
-	void *pBuffer;
+	const void *pBuffer;
 } sGmacSG;
 
 /**
@@ -180,7 +180,7 @@ typedef struct _GmacQueueDriver {
 #ifdef GMAC_ZEROCOPY
         uint16_t wRxTail;
 #endif
-        
+
 	/** TX TD list size */
 	uint16_t wTxListSize;
 	/** Circular buffer head pointer by upper layer (buffer to be sent) */
@@ -309,8 +309,8 @@ extern void GMACD_TxPtpEvtMsgCBRegister (sGmacd *pGmacd,
     fGmacdTxPtpEvtCallBack pTxPtpEvtCb,
     gmacQueList_t queIdx);
 
-extern void GMACD_RxPtpEvtMsgCBRegister(sGmacd * pGmacd, 
-    fGmacdRxPtpEvtCallBack pRxPtpEvtCb, 
+extern void GMACD_RxPtpEvtMsgCBRegister(sGmacd * pGmacd,
+    fGmacdRxPtpEvtCallBack pRxPtpEvtCb,
     gmacQueList_t queIdx);
 
 #ifdef __cplusplus

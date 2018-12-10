@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------------------------*/
 /* UNICENS Generated Network Configuration                                                        */
-/* Generator: xml2struct for Windows V4.1.0                                                       */
+/* Generator: xml2struct for Windows V4.4.0                                                       */
 /*------------------------------------------------------------------------------------------------*/
 #include "ucs_api.h"
 
@@ -20,11 +20,11 @@ Ucs_Xrm_MlbSocket_t SrcOfRoute1_MlbSocket = {
     UCS_MLB_SCKT_SYNC_DATA,
     4,
     0x0A };
-Ucs_Xrm_MostSocket_t SrcOfRoute1_NetworkSocket = { 
-    UCS_XRM_RC_TYPE_MOST_SOCKET,
+Ucs_Xrm_NetworkSocket_t SrcOfRoute1_NetworkSocket = { 
+    UCS_XRM_RC_TYPE_NW_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_OUTPUT,
-    UCS_MOST_SCKT_SYNC_DATA,
+    UCS_NW_SCKT_SYNC_DATA,
     4 };
 Ucs_Xrm_SyncCon_t SrcOfRoute1_SyncCon = { 
     UCS_XRM_RC_TYPE_SYNC_CON,
@@ -38,11 +38,11 @@ Ucs_Xrm_ResObject_t *SrcOfRoute1_JobList[] = {
     &SrcOfRoute1_NetworkSocket,
     &SrcOfRoute1_SyncCon,
     NULL };
-Ucs_Xrm_MostSocket_t SnkOfRoute1_NetworkSocket = { 
-    UCS_XRM_RC_TYPE_MOST_SOCKET,
+Ucs_Xrm_NetworkSocket_t SnkOfRoute1_NetworkSocket = { 
+    UCS_XRM_RC_TYPE_NW_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_INPUT,
-    UCS_MOST_SCKT_SYNC_DATA,
+    UCS_NW_SCKT_SYNC_DATA,
     4 };
 Ucs_Xrm_DefaultCreatedPort_t SnkOfRoute1_DcPort = { 
     UCS_XRM_RC_TYPE_DC_PORT,
@@ -68,11 +68,11 @@ Ucs_Xrm_ResObject_t *SnkOfRoute1_JobList[] = {
     &SnkOfRoute1_SyncCon,
     NULL };
 /* Route 2 from source-node=0x200 to sink-node=0x270 */
-Ucs_Xrm_MostSocket_t SnkOfRoute2_NetworkSocket = { 
-    UCS_XRM_RC_TYPE_MOST_SOCKET,
+Ucs_Xrm_NetworkSocket_t SnkOfRoute2_NetworkSocket = { 
+    UCS_XRM_RC_TYPE_NW_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_INPUT,
-    UCS_MOST_SCKT_SYNC_DATA,
+    UCS_NW_SCKT_SYNC_DATA,
     4 };
 Ucs_Xrm_StrmPort_t SnkOfRoute2_StrmPort0 = { 
     UCS_XRM_RC_TYPE_STRM_PORT,
@@ -105,11 +105,11 @@ Ucs_Xrm_ResObject_t *SnkOfRoute2_JobList[] = {
     &SnkOfRoute2_SyncCon,
     NULL };
 /* Route 3 from source-node=0x200 to sink-node=0x240 */
-Ucs_Xrm_MostSocket_t SnkOfRoute3_NetworkSocket = { 
-    UCS_XRM_RC_TYPE_MOST_SOCKET,
+Ucs_Xrm_NetworkSocket_t SnkOfRoute3_NetworkSocket = { 
+    UCS_XRM_RC_TYPE_NW_SOCKET,
     0x0D00,
     UCS_SOCKET_DIR_INPUT,
-    UCS_MOST_SCKT_SYNC_DATA,
+    UCS_NW_SCKT_SYNC_DATA,
     4 };
 Ucs_Xrm_StrmPort_t SnkOfRoute3_StrmPort0 = { 
     UCS_XRM_RC_TYPE_STRM_PORT,
@@ -141,187 +141,167 @@ Ucs_Xrm_ResObject_t *SnkOfRoute3_JobList[] = {
     &SnkOfRoute3_StrmSocket,
     &SnkOfRoute3_SyncCon,
     NULL };
-uint8_t PayloadRequest1ForNode270[] = {
+UCS_NS_CONST uint8_t PayloadRequest1ForNode270[] = {
     0x00, 0x00, 0x01, 0x01 };
-Ucs_Ns_ConfigMsg_t Request1ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request1ForNode270 = {
     0x00,
     0x01,
     0x06C1,
     0x02,
     0x04,
     PayloadRequest1ForNode270 };
-uint8_t PayloadResponse1ForNode270[] = {
-    0x0F, 0x00 };
-Ucs_Ns_ConfigMsg_t Response1ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response1ForNode270 = {
     0x00,
     0x01,
     0x06C1,
     0x0C,
-    0x02,
-    PayloadResponse1ForNode270 };
-uint8_t PayloadRequest2ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest2ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x02, 0x00, 0x64, 0x1B, 0x80 };
-Ucs_Ns_ConfigMsg_t Request2ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request2ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0A,
     PayloadRequest2ForNode270 };
-uint8_t PayloadResponse2ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x02 };
-Ucs_Ns_ConfigMsg_t Response2ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response2ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse2ForNode270 };
-uint8_t PayloadRequest3ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest3ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x02, 0x00, 0x64, 0x11, 0xB8 };
-Ucs_Ns_ConfigMsg_t Request3ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request3ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0A,
     PayloadRequest3ForNode270 };
-uint8_t PayloadResponse3ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x02 };
-Ucs_Ns_ConfigMsg_t Response3ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response3ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse3ForNode270 };
-uint8_t PayloadRequest4ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest4ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x02, 0x00, 0x64, 0x12, 0x60 };
-Ucs_Ns_ConfigMsg_t Request4ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request4ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0A,
     PayloadRequest4ForNode270 };
-uint8_t PayloadResponse4ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x02 };
-Ucs_Ns_ConfigMsg_t Response4ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response4ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse4ForNode270 };
-uint8_t PayloadRequest5ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest5ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x02, 0x00, 0x64, 0x13, 0xA0 };
-Ucs_Ns_ConfigMsg_t Request5ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request5ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0A,
     PayloadRequest5ForNode270 };
-uint8_t PayloadResponse5ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x02 };
-Ucs_Ns_ConfigMsg_t Response5ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response5ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse5ForNode270 };
-uint8_t PayloadRequest6ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest6ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x02, 0x00, 0x64, 0x14, 0x48 };
-Ucs_Ns_ConfigMsg_t Request6ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request6ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0A,
     PayloadRequest6ForNode270 };
-uint8_t PayloadResponse6ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x02 };
-Ucs_Ns_ConfigMsg_t Response6ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response6ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse6ForNode270 };
-uint8_t PayloadRequest7ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest7ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x05, 0x00, 0x64, 0x20, 0x00, 0x89, 0x77, 0x72 };
-Ucs_Ns_ConfigMsg_t Request7ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request7ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0D,
     PayloadRequest7ForNode270 };
-uint8_t PayloadResponse7ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x05 };
-Ucs_Ns_ConfigMsg_t Response7ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response7ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse7ForNode270 };
-uint8_t PayloadRequest8ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest8ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x02, 0x00, 0x64, 0x06, 0x00 };
-Ucs_Ns_ConfigMsg_t Request8ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request8ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0A,
     PayloadRequest8ForNode270 };
-uint8_t PayloadResponse8ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x02 };
-Ucs_Ns_ConfigMsg_t Response8ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response8ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse8ForNode270 };
-uint8_t PayloadRequest9ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest9ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x02, 0x00, 0x64, 0x05, 0x00 };
-Ucs_Ns_ConfigMsg_t Request9ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request9ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0A,
     PayloadRequest9ForNode270 };
-uint8_t PayloadResponse9ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x02 };
-Ucs_Ns_ConfigMsg_t Response9ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response9ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse9ForNode270 };
-uint8_t PayloadRequest10ForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest10ForNode270[] = {
     0x0F, 0x00, 0x00, 0x00, 0x2A, 0x03, 0x00, 0x64, 0x07, 0x01, 0x50 };
-Ucs_Ns_ConfigMsg_t Request10ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request10ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x0B,
     PayloadRequest10ForNode270 };
-uint8_t PayloadResponse10ForNode270[] = {
-    0x0F, 0x00, 0x2A, 0x03 };
-Ucs_Ns_ConfigMsg_t Response10ForNode270 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response10ForNode270 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse10ForNode270 };
-Ucs_Ns_Script_t ScriptsForNode270[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST Ucs_Ns_Script_t ScriptsForNode270[] = {
     {
         0,
         &Request1ForNode270,
@@ -363,61 +343,55 @@ Ucs_Ns_Script_t ScriptsForNode270[] = {
         &Request10ForNode270,
         &Response10ForNode270
     } };
-uint8_t PayloadRequest1ForNode240[] = {
+UCS_NS_CONST uint8_t PayloadRequest1ForNode240[] = {
     0x00, 0x00, 0x01, 0x01 };
-Ucs_Ns_ConfigMsg_t Request1ForNode240 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request1ForNode240 = {
     0x00,
     0x01,
     0x06C1,
     0x02,
     0x04,
     PayloadRequest1ForNode240 };
-uint8_t PayloadResponse1ForNode240[] = {
-    0x0F, 0x00 };
-Ucs_Ns_ConfigMsg_t Response1ForNode240 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response1ForNode240 = {
     0x00,
     0x01,
     0x06C1,
     0x0C,
-    0x02,
-    PayloadResponse1ForNode240 };
-uint8_t PayloadRequest2ForNode240[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest2ForNode240[] = {
     0x0F, 0x00, 0x02, 0x0A, 0x18, 0x03, 0x00, 0x64, 0x00, 0x0F, 0x02, 0x01, 0x00, 0x00, 0x02, 0xA5, 0xDF, 0x03, 0x3F, 0x3F, 0x04, 0x02, 0x02, 0x10, 0x40, 0x40, 0x11, 0x00, 0x00, 0x12, 0x00, 0x00, 0x13, 0x00, 0x00, 0x14, 0x00, 0x00 };
-Ucs_Ns_ConfigMsg_t Request2ForNode240 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request2ForNode240 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x26,
     PayloadRequest2ForNode240 };
-uint8_t PayloadResponse2ForNode240[] = {
-    0x0F, 0x00, 0x18, 0x1E };
-Ucs_Ns_ConfigMsg_t Response2ForNode240 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response2ForNode240 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse2ForNode240 };
-uint8_t PayloadRequest3ForNode240[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST uint8_t PayloadRequest3ForNode240[] = {
     0x0F, 0x00, 0x02, 0x04, 0x18, 0x03, 0x00, 0x64, 0x20, 0x00, 0x00, 0x21, 0x00, 0x00, 0x22, 0x00, 0x00, 0x23, 0x00, 0x00 };
-Ucs_Ns_ConfigMsg_t Request3ForNode240 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Request3ForNode240 = {
     0x00,
     0x01,
     0x06C4,
     0x02,
     0x14,
     PayloadRequest3ForNode240 };
-uint8_t PayloadResponse3ForNode240[] = {
-    0x0F, 0x00, 0x18, 0x0C };
-Ucs_Ns_ConfigMsg_t Response3ForNode240 = {
+UCS_NS_CONST Ucs_Ns_ConfigMsg_t Response3ForNode240 = {
     0x00,
     0x01,
     0x06C4,
     0x0C,
-    0x04,
-    PayloadResponse3ForNode240 };
-Ucs_Ns_Script_t ScriptsForNode240[] = {
+    0x00,
+    NULL };
+UCS_NS_CONST Ucs_Ns_Script_t ScriptsForNode240[] = {
     {
         0,
         &Request1ForNode240,

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------------------------*/
-/* UNICENS Daemon Task Implementation                                                             */
-/* Copyright 2018, Microchip Technology Inc. and its subsidiaries.                                */
+/* UNICENS Node Address Collision Solver Component                                                */
+/* Copyright 2017, Microchip Technology Inc. and its subsidiaries.                                */
 /*                                                                                                */
 /* Redistribution and use in source and binary forms, with or without                             */
 /* modification, are permitted provided that the following conditions are met:                    */
@@ -28,54 +28,28 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           */
 /*------------------------------------------------------------------------------------------------*/
 
-#ifndef TASK_UNICENS_H_
-#define TASK_UNICENS_H_
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <assert.h>
+#include "ucsi_collision.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                            Public API                                */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-
-/**
- * \brief Initializes the UNICENS Task
- * \note Must be called before any other function of this component
- * \return true, if initialization was successful. false, otherwise, do not call any other function in that case
- */
-bool TaskUnicens_Init(void);
-
-/**
- * \brief Gives the UNICENS Task time to maintain it's service routines
- */
-void TaskUnicens_Service(void);
-
-/**
- * \brief Enables or disables a route by the given routeId
- *
- * \param routeId - identifier as given in XML file along with MOST socket (unique)
- * \param isActive - true, route will become active. false, route will be deallocated
- *
- * \return true, if route was found and the specific command was enqueued to UNICENS.
- */
-bool TaskUnicens_SetRouteActive(uint16_t routeId, bool isActive);
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-/*                        CALLBACK SECTION                              */
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-
-/**
- * \brief Callback when a route become active / inactive.
- * \note This function must be implemented by the integrator
- * \param routeId - identifier as given in XML file along with MOST socket (unique)
- * \param isActive - true, if the route is now in use. false, the route is not established.
- * \param connectionLabel - The connection label used on the Network. Only valid, if isActive=true
- */
-extern void TaskUnicens_CB_OnRouteResult(uint16_t routeId, bool isActive, uint16_t connectionLabel);
-
-#ifdef __cplusplus
+void UCSICollision_Init()
+{
 }
-#endif
 
-#endif /* TASK_UNICENS_H_ */
+void UCSICollision_SetUserPtr(void *userPtr)
+{
+}
+
+void UCSICollision_SetExpectedNodeCount(uint8_t nodeCount)
+{
+}
+
+void UCSICollision_SetFoundNodeCount(uint8_t nodeCount)
+{
+}
+
+void UCSICollision_StoreSignature(const Ucs_Signature_t *signature, bool collisionDetected)
+{
+}

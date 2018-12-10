@@ -34,6 +34,10 @@
 #include "dim2_lld.h"
 #include "task-audio.h"
 
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                      DEFINES AND LOCAL VARIABLES                     */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
 /* #define ENABLE_AUDIO_RX */
 
 struct TaskAudioVars
@@ -47,12 +51,20 @@ static const uint8_t audioData[] =
     #include "beat_be.h"
 };
 
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                      PRIVATE FUNCTION PROTOTYPES                     */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 static bool ProcessStreamingData(const uint8_t *pRxBuf, uint32_t rxLen, uint8_t *pTxBuf, uint32_t txLen);
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                         PUBLIC FUNCTIONS                             */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 bool TaskAudio_Init(void)
 {
     memset(&m, 0, sizeof(m));
+    assert(0 == sizeof(audioData) % 4);
     m.initialized = true;
     return true;
 }
@@ -83,6 +95,10 @@ void TaskAudio_Service(void)
         else break;
     }
 }
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                   PRIVATE FUNCTION IMPLEMENTATIONS                   */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 static bool ProcessStreamingData(const uint8_t *pRxBuf, uint32_t rxLen, uint8_t *pTxBuf, uint32_t txLen)
 {

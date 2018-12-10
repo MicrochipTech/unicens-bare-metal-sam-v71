@@ -37,8 +37,18 @@
 #define MAX_CHANNEL_INSTANCES           (4)
 
 //Enable to debug
-//#define LLD_TRACE
+/* #define LLD_TRACE */
 
+#ifdef LLD_TRACE
+/* #define LLD_TRACE_IGNORE_RX */
+/* #define LLD_TRACE_IGNORE_TX */
+#define LLD_TRACE_IGNORE_CONTROL
+#define LLD_TRACE_IGNORE_SYNC
+/* #define LLD_TRACE_IGNORE_ASYNC */
+#define LLD_TRACE_IGNORE_ISOC
+
+#include "Console.h"
+#endif
 
 //Fixed values:
 #define DMA_CHANNELS (32 - 1)  /* channel 0 is a system channel */
@@ -67,15 +77,74 @@ typedef struct {
     bool initialized;
     ChannelContext_t controlLookupTable[DIM2LLD_ChannelDirection_BOUNDARY];
     ChannelContext_t asyncLookupTable[DIM2LLD_ChannelDirection_BOUNDARY];
-    ChannelContext_t
-    syncLookupTable[DIM2LLD_ChannelDirection_BOUNDARY][MAX_CHANNEL_INSTANCES];
-    ChannelContext_t
-    isocLookupTable[DIM2LLD_ChannelDirection_BOUNDARY][MAX_CHANNEL_INSTANCES];
+    ChannelContext_t syncLookupTable[DIM2LLD_ChannelDirection_BOUNDARY][MAX_CHANNEL_INSTANCES];
+    ChannelContext_t isocLookupTable[DIM2LLD_ChannelDirection_BOUNDARY][MAX_CHANNEL_INSTANCES];
     ///Zero terminated list of all dim channels. This used by the ISR routine.
     struct dim_channel *allChannels[DMA_CHANNELS];
 } LocalVar_t;
 
 static LocalVar_t lc = { 0 };
+
+
+static void ExecuteLLDTrace(DIM2LLD_ChannelType_t cType, DIM2LLD_ChannelDirection_t dir, const uint8_t *buffer, uint16_t payloadLen)
+{
+#ifdef LLD_TRACE
+    do
+    {
+        const char *pTypeStr = "Unknown";
+        const char *pDirStr = "Unknown";
+        int16_t l;
+        #ifdef LLD_TRACE_IGNORE_TX
+        if (DIM2LLD_ChannelDirection_TX == dir)
+            break;
+        #endif
+        #ifdef LLD_TRACE_IGNORE_RX
+        if (DIM2LLD_ChannelDirection_RX == dir)
+            break;
+        #endif
+        #ifdef LLD_TRACE_IGNORE_CONTROL
+        if (DIM2LLD_ChannelType_Control == cType)
+            break;
+        #endif
+        #ifdef LLD_TRACE_IGNORE_SYNC
+        if (DIM2LLD_ChannelType_Sync == cType)
+            break;
+        #endif
+        #ifdef LLD_TRACE_IGNORE_ASYNC
+        if (DIM2LLD_ChannelType_Async == cType)
+            break;
+        #endif
+        #ifdef LLD_TRACE_IGNORE_ISOC
+        if (DIM2LLD_ChannelType_Isoc == cType)
+            break;
+        #endif
+        switch(dir)
+        {
+            case DIM2LLD_ChannelDirection_TX: pDirStr = YELLOW "TX" RESETCOLOR; break;
+            case DIM2LLD_ChannelDirection_RX: pDirStr = GREEN "RX" RESETCOLOR; break;
+            case DIM2LLD_ChannelDirection_BOUNDARY:
+            default:
+            assert(false);
+        }
+        switch(cType)
+        {
+            case DIM2LLD_ChannelType_Control:  pTypeStr = "Control"; break;
+            case DIM2LLD_ChannelType_Async: pTypeStr = "Async"; break;
+            case DIM2LLD_ChannelType_Sync: pTypeStr = "Sync"; break;
+            case DIM2LLD_ChannelType_Isoc: pTypeStr = "Isoc"; break;
+            case DIM2LLD_ChannelType_BOUNDARY:
+            default:
+            assert(false);
+        }
+        ConsolePrintf(PRIO_HIGH, "DIM2LLD_%s (%s): [", pDirStr, pTypeStr);
+        for (l = 0; l < payloadLen; l++) {
+            ConsolePrintf(PRIO_HIGH, " %02X", buffer[l]);
+        }
+        ConsolePrintf(PRIO_HIGH, " ]\r\n");
+    }
+    while(0);
+#endif
+}
 
 //This must be adapted use case specific
 static ChannelContext_t *GetDimContext(DIM2LLD_ChannelType_t cType,
@@ -302,16 +371,6 @@ static void ServiceTxChannel(ChannelContext_t *context)
         assert(NULL != entry);
         if (NULL == entry || 0 == entry->payloadLen || entry->hwEnqueued)
             continue;
-#ifdef LLD_TRACE
-        {
-            int16_t l;
-            printf("DIM2LLD_TX: [");
-            for (l = 0; l < entry->payloadLen; l++) {
-                printf(" %02X", entry->buffer[l]);
-            }
-            printf(" ]\r\n");
-        }
-#endif
         disable_mlb_interrupt();
         if (dim_dbr_space(context->dimChannel) < entry->payloadLen) {
             enable_mlb_interrupt();
@@ -321,6 +380,7 @@ static void ServiceTxChannel(ChannelContext_t *context)
                                entry->payloadLen)) {
             enable_mlb_interrupt();
             entry->hwEnqueued = true;
+            ExecuteLLDTrace(context->cType, context->dir, entry->buffer, entry->payloadLen);
         } else {
             enable_mlb_interrupt();
             break;
@@ -367,10 +427,6 @@ static void ServiceRxChannel(ChannelContext_t *context)
     //Handle filled RX buffers
     done_buffers = dim_get_channel_state(context->dimChannel, &st)->done_buffers;
     if (0 != done_buffers) {
-        disable_mlb_interrupt();
-        dim_detach_buffers(context->dimChannel, done_buffers);
-        enable_mlb_interrupt();
-
         amountRx = RingBuffer_GetReadElementCount(context->ringBuffer);
         assert(done_buffers <= amountRx);
         for (i = 0; i < done_buffers && i < amountRx; i++) {
@@ -384,17 +440,11 @@ static void ServiceRxChannel(ChannelContext_t *context)
             else
                 entry->payloadLen = entry->maxPayloadLen;
             assert(entry->payloadLen <= entry->maxPayloadLen);
-#ifdef LLD_TRACE
-            {
-                int16_t l;
-                printf("DIM2LLD_RX: [");
-                for (l = 0; l < entry->payloadLen; l++) {
-                    printf(" %02X", entry->buffer[entry->offset + l]);
-                }
-                printf(" ]\r\n");
-            }
-#endif
+            ExecuteLLDTrace(context->cType, context->dir, entry->buffer, entry->payloadLen);
             entry->hwEnqueued = false;
+            disable_mlb_interrupt();
+            dim_detach_buffers(context->dimChannel, 1);
+            enable_mlb_interrupt();
         }
     }
 }
@@ -442,7 +492,7 @@ uint32_t DIM2LLD_GetQueueElementCount(DIM2LLD_ChannelType_t cType, DIM2LLD_Chann
     return RingBuffer_GetReadElementCount(context->ringBuffer);
 }
 
-uint16_t DIM2LLD_GetRxData(DIM2LLD_ChannelType_t cType, DIM2LLD_ChannelDirection_t dir, 
+uint16_t DIM2LLD_GetRxData(DIM2LLD_ChannelType_t cType, DIM2LLD_ChannelDirection_t dir,
                            uint8_t instance, uint32_t pos, const uint8_t **pBuffer, uint16_t *pOffset, uint8_t *pPacketCounter)
 {
     ChannelContext_t *context;
@@ -455,7 +505,7 @@ uint16_t DIM2LLD_GetRxData(DIM2LLD_ChannelType_t cType, DIM2LLD_ChannelDirection
     if (NULL != pOffset)
         *pOffset = 0;
     if (NULL != pPacketCounter)
-        *pPacketCounter = 0;        
+        *pPacketCounter = 0;
     context = GetDimContext(cType, dir, instance);
     if (NULL == context || !context->channelUsed)
         return 0;
@@ -483,7 +533,7 @@ void DIM2LLD_ReleaseRxData(DIM2LLD_ChannelType_t cType,
     {
         assert(false);
         return;
-    }        
+    }
     RingBuffer_PopReadPtr(context->ringBuffer);
 }
 
@@ -500,7 +550,7 @@ uint16_t DIM2LLD_GetTxData(DIM2LLD_ChannelType_t cType,
     context = GetDimContext(cType, dir, instance);
     if (NULL == context || !context->channelUsed)
         return 0;
-    assert(context->cType == cType && context->dir == dir && NULL != context->ringBuffer);        
+    assert(context->cType == cType && context->dir == dir && NULL != context->ringBuffer);
     entry = (QueueEntry_t *)RingBuffer_GetWritePtr(context->ringBuffer);
     if (NULL == entry)
         return 0;

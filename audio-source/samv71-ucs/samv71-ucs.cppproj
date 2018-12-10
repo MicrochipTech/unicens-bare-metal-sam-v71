@@ -39,7 +39,7 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.samice</avrtool>
-    <avrtoolserialnumber>28018357</avrtoolserialnumber>
+    <avrtoolserialnumber>28023388</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0xA1220E00</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_samice>
       <ToolOptions>
@@ -49,7 +49,7 @@
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
-      <ToolNumber>28018357</ToolNumber>
+      <ToolNumber>28023388</ToolNumber>
       <ToolName>SAM-ICE</ToolName>
     </com_atmel_avrdbg_tool_samice>
     <avrtoolinterface>SWD</avrtoolinterface>
@@ -81,23 +81,25 @@
   <armgcc.compiler.symbols.DefSymbols><ListValues>
   <Value>BOARD_SAMV71_XULT</Value>
   <Value>GMAC_ZEROCOPY</Value>
+  <Value>TRACE_LEVEL=TRACE_LEVEL_WARNING</Value>
+  <Value>ENABLE_TCM</Value>
   <Value>NDEBUG</Value>
 </ListValues></armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
-  <armgcc.compiler.optimization.EnableFastMath>True</armgcc.compiler.optimization.EnableFastMath>
   <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
   <armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
   <armgcccpp.compiler.symbols.DefSymbols><ListValues>
   <Value>BOARD_SAMV71_XULT</Value>
   <Value>GMAC_ZEROCOPY</Value>
+  <Value>TRACE_LEVEL=TRACE_LEVEL_WARNING</Value>
+  <Value>ENABLE_TCM</Value>
   <Value>NDEBUG</Value>
 </ListValues></armgcccpp.compiler.symbols.DefSymbols>
   <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
   <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
-  <armgcccpp.compiler.optimization.EnableFastMath>True</armgcccpp.compiler.optimization.EnableFastMath>
   <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
   <armgcccpp.linker.general.UseNewlibNano>True</armgcccpp.linker.general.UseNewlibNano>
   <armgcccpp.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></armgcccpp.linker.libraries.Libraries>
@@ -105,7 +107,7 @@
   <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
   <armgcccpp.linker.optimization.EnableFastMath>True</armgcccpp.linker.optimization.EnableFastMath>
   <armgcccpp.linker.memorysettings.ExternalRAM></armgcccpp.linker.memorysettings.ExternalRAM>
-  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsamv71q21_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsamv71q21_flash_tcm.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
   <armgcccpp.assembler.general.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\SAMV71_DFP\1.1.61\include</Value><Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value></ListValues></armgcccpp.assembler.general.IncludePaths>
   <armgcccpp.preprocessingassembler.general.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\SAMV71_DFP\1.1.61\include</Value><Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value></ListValues></armgcccpp.preprocessingassembler.general.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize most (-O3)</armgcc.compiler.optimization.level>
@@ -127,26 +129,24 @@
   <Value>BOARD_SAMV71_XULT</Value>
   <Value>GMAC_ZEROCOPY</Value>
   <Value>TRACE_LEVEL=TRACE_LEVEL_WARNING</Value>
-  <Value>DEBUG</Value>
   <Value>ENABLE_TCM</Value>
+  <Value>DEBUG</Value>
 </ListValues></armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
-  <armgcc.compiler.optimization.PrepareDataForGarbageCollection>False</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
-  <armgcc.compiler.optimization.EnableFastMath>False</armgcc.compiler.optimization.EnableFastMath>
+  <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
   <armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</armgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
   <armgcccpp.compiler.symbols.DefSymbols><ListValues>
   <Value>BOARD_SAMV71_XULT</Value>
   <Value>GMAC_ZEROCOPY</Value>
   <Value>TRACE_LEVEL=TRACE_LEVEL_WARNING</Value>
-  <Value>DEBUG</Value>
   <Value>ENABLE_TCM</Value>
+  <Value>DEBUG</Value>
 </ListValues></armgcccpp.compiler.symbols.DefSymbols>
   <armgcccpp.compiler.directories.IncludePaths><ListValues><Value>../inc</Value><Value>../libraries</Value><Value>../libraries/libboard</Value><Value>../libraries/libboard/include</Value><Value>../libraries/libchip</Value><Value>../libraries/libchip/include</Value><Value>../libraries/libchip/include/samv71</Value><Value>../libraries/libchip/include/cmsis/CMSIS/Include</Value><Value>../utils</Value><Value>../utils/md5</Value><Value>../src/gmac</Value><Value>../libraries/lwip/include</Value><Value>../libraries/lwip/driver</Value><Value>../libraries/unicens/cfg-daemon</Value><Value>../libraries/unicens/ucs2/inc</Value><Value>../libraries/console</Value><Value>../libraries/ucsi</Value><Value>../src</Value><Value>../src/driver/dim2</Value><Value>../src/driver/dim2/board</Value><Value>../src/driver/dim2/hal</Value><Value>../src/driver/dim2/internal</Value></ListValues></armgcccpp.compiler.directories.IncludePaths>
   <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
-  <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>False</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
-  <armgcccpp.compiler.optimization.EnableFastMath>False</armgcccpp.compiler.optimization.EnableFastMath>
+  <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
   <armgcccpp.linker.general.UseNewlibNano>False</armgcccpp.linker.general.UseNewlibNano>
   <armgcccpp.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></armgcccpp.linker.libraries.Libraries>
@@ -807,6 +807,12 @@
     <Compile Include="libraries\ucsi\ucsi_cfg.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\ucsi\ucsi_collision.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\ucsi\ucsi_collision.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\ucsi\ucsi_impl.c">
       <SubType>compile</SubType>
     </Compile>
@@ -823,6 +829,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\cfg-daemon\ucs_xrm_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_addr.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_alm.h">
@@ -852,13 +861,13 @@
     <Compile Include="libraries\unicens\ucs2\inc\ucs_api.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_atd.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_attach.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_base.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="libraries\unicens\ucs2\inc\ucs_bc_diag.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_class.h">
@@ -874,6 +883,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_dec.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_diag_fdx.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_diag_hdx.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_dl.h">
@@ -898,6 +913,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_factory.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_fbp.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_fsm.h">
@@ -942,13 +960,19 @@
     <Compile Include="libraries\unicens\ucs2\inc\ucs_message_pb.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="libraries\unicens\ucs2\inc\ucs_mgr.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_misc.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_net.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_netstarter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_nm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\inc\ucs_node.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_nodedis.h">
@@ -1029,9 +1053,6 @@
     <Compile Include="libraries\unicens\ucs2\inc\ucs_smm_pb.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="libraries\unicens\ucs2\inc\ucs_sys_diag.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="libraries\unicens\ucs2\inc\ucs_telqueue.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1059,6 +1080,9 @@
     <Compile Include="libraries\unicens\ucs2\inc\ucs_xrm_pv.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_addr.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_alm.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1077,13 +1101,13 @@
     <Compile Include="libraries\unicens\ucs2\src\ucs_amtp.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_atd.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_attach.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_base.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="libraries\unicens\ucs2\src\ucs_bc_diag.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_class.c">
@@ -1093,6 +1117,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_dec.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_diag_fdx.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_diag_hdx.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_dl.c">
@@ -1111,6 +1141,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_factory.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_fbp.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_fsm.c">
@@ -1137,13 +1170,19 @@
     <Compile Include="libraries\unicens\ucs2\src\ucs_message.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="libraries\unicens\ucs2\src\ucs_mgr.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_misc.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_net.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_netstarter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_nm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\unicens\ucs2\src\ucs_node.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_nodedis.c">
@@ -1195,9 +1234,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_smm.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="libraries\unicens\ucs2\src\ucs_sys_diag.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\unicens\ucs2\src\ucs_telqueue.c">
@@ -1432,6 +1468,18 @@
       <SubType>compile</SubType>
     </None>
     <None Include="libraries\libchip\include\cmsis\CMSIS\Lib\license.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\unicens\ucs2\LICENSE">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\unicens\ucs2\README.md">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\unicens\ucs2\ucs_v2.2.0_xrm_debug_fptr_m0037367.patch">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="libraries\unicens\ucs2\VERSION">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>

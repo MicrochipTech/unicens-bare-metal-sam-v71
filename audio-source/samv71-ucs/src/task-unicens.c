@@ -43,10 +43,16 @@
 #include "task-unicens.h"
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*                          USER ADJUSTABLE                             */
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+#define ENABLE_PROMISCOUS_MODE     (true)
+#define DEBUG_TABLE_PRINT_TIME_MS  (250)
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 /*                      DEFINES AND LOCAL VARIABLES                     */
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-#define DEBUG_TABLE_PRINT_TIME_MS  (250)
 
 typedef struct
 {
@@ -69,6 +75,7 @@ typedef struct
     bool unicensRunning;
     uint32_t unicensTimeout;
     bool unicensTrigger;
+    bool promiscuousMode;
     bool amsReceived;
 } LocalVar_t;
 
@@ -91,6 +98,24 @@ static DIM2_Setup_t mlbConfig[] =
         .instance = 0,
         .channelAddress = 4,
         .bufferSize = 72,
+        .subSize = 0,
+        .numberOfBuffers = 8,
+        .bufferOffset = 0
+        }, {
+        .cType = DIM2LLD_ChannelType_Async,
+        .dir = DIM2LLD_ChannelDirection_RX,
+        .instance = 0,
+        .channelAddress = 6,
+        .bufferSize = 1522,
+        .subSize = 0,
+        .numberOfBuffers = 8,
+        .bufferOffset = 0
+        }, {
+        .cType = DIM2LLD_ChannelType_Async,
+        .dir = DIM2LLD_ChannelDirection_TX,
+        .instance = 0,
+        .channelAddress = 8,
+        .bufferSize = 1522,
         .subSize = 0,
         .numberOfBuffers = 8,
         .bufferOffset = 0
@@ -119,6 +144,7 @@ static void ServiceMostCntrlRx(void);
 
 bool TaskUnicens_Init(void)
 {
+    m.promiscuousMode = ENABLE_PROMISCOUS_MODE;
     // Initialize MOST DIM2 driver
     DIM2LLD_Init();
     Wait(100);
@@ -130,9 +156,9 @@ bool TaskUnicens_Init(void)
     for (uint32_t i = 0; i < mlbConfigSize; i++)
     {
         if (!DIM2LLD_SetupChannel(mlbConfig[i].cType, mlbConfig[i].dir, mlbConfig[i].instance, mlbConfig[i].channelAddress,
-        mlbConfig[i].bufferSize, mlbConfig[i].subSize, mlbConfig[i].numberOfBuffers, mlbConfig[i].bufferOffset))
+            mlbConfig[i].bufferSize, mlbConfig[i].subSize, mlbConfig[i].numberOfBuffers, mlbConfig[i].bufferOffset))
         {
-            ConsolePrintf(PRIO_ERROR, "Failed to MLB channel with address=0x%X\r\n", mlbConfig[i].channelAddress);
+            ConsolePrintf(PRIO_ERROR, "Failed to allocate MLB channel with address=0x%X\r\n", mlbConfig[i].channelAddress);
             assert(false);
             return false;
         }
@@ -182,6 +208,11 @@ void TaskUnicens_Service(void)
         }
         else assert(false);
     }
+}
+
+bool TaskUnicens_SetRouteActive(uint16_t routeId, bool isActive)
+{
+    return UCSI_SetRouteActive(&m.unicens, routeId, isActive);
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -278,6 +309,10 @@ void UCSI_CB_OnServiceRequired(void *pTag)
     m.unicensTrigger = true;
 }
 
+void UCSI_CB_OnResetInic(void *pTag)
+{
+}
+
 void UCSI_CB_OnTxRequest(void *pTag,
 const uint8_t *pPayload, uint32_t payloadLen)
 {
@@ -327,6 +362,7 @@ void UCSI_CB_OnRouteResult(void *pTag, uint16_t routeId, bool isActive, uint16_t
 {
     ConsolePrintf(PRIO_MEDIUM, "Route id=0x%X isActive=%s ConLabel=0x%X\r\n", routeId,
         (isActive ? "true" : "false"), connectionLabel);
+    TaskUnicens_CB_OnRouteResult(routeId, isActive, connectionLabel);
 }
 
 void UCSI_CB_OnGpioStateChange(void *pTag, uint16_t nodeAddress, uint8_t gpioPinId, bool isHighState)
@@ -339,4 +375,24 @@ void UCSI_CB_OnI2CRead(void *pTag, bool success, uint16_t targetAddress, uint8_t
 {
     if (!success)
         ConsolePrintf(PRIO_ERROR, RED "I2C read failed, node=0x%X" RESETCOLOR "\r\n", targetAddress);
+}
+
+void UCSI_CB_OnMgrReport(void *pTag, Ucs_MgrReport_t code, Ucs_Signature_t *signature, Ucs_Rm_Node_t *pNode)
+{
+    pTag = pTag;
+    if (m.promiscuousMode && NULL != signature && UCS_MGR_REP_AVAILABLE == code)
+    {
+        uint16_t targetAddr = signature->node_address;
+        UCSI_EnablePromiscuousMode(&m.unicens, targetAddr, true);
+    }
+}
+
+void UCSI_CB_OnProgrammingDone(void *pTag, bool changed)
+{
+    pTag = pTag;
+    if (changed)
+    ConsolePrintf(PRIO_HIGH, YELLOW "Programming finished, terminating program.." RESETCOLOR "\r\n");
+    else
+    ConsolePrintf(PRIO_HIGH, YELLOW "No programming needed (no collision), terminating program.." RESETCOLOR "\r\n");
+    exit(0);
 }
